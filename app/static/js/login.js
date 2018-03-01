@@ -7,7 +7,7 @@ $(document).ready(function () {
         });
 
         data = validateData();
-        url = $('form').attr('action')
+        url = $('form').attr('action');
 
         console.log(data);
         console.log(url)
@@ -17,12 +17,19 @@ $(document).ready(function () {
             method: 'POST',
             data: data,
             success: function(resp) {
-                console.log(resp)
-                $("#wrapper").append(`<div class="alert alert-danger">${resp}</div>`);
+                response = JSON.parse(resp);
+                if (resp.error) {
+                    $("#wrapper").append(`<div class="alert alert-danger">${resp.error}</div>`);
+                } else if (resp.success) {
+                    window.location = `/${url.split('/')[1]}/${resp.success}`;
+                } else {
+                    $("#wrapper").append(`<div class="alert alert-danger">Unknown error!</div>`);
+                }
+                
 
             }.bind(this),
             error: function(resp) {
-                console.log('err' + resp)
+                $("#wrapper").append(`<div class="alert alert-danger">Unknown error!</div>`);
             }.bind(this),
         })
     })

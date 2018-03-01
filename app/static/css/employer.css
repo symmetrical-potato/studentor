@@ -1,0 +1,28 @@
+body {
+  min-height: 100vh; }
+
+.navbar {
+  background-color: rgba(128, 128, 128, 0.3);
+  color: white;
+  margin-bottom: 20px; }
+
+#wrapper {
+  min-width: 100%;
+  margin-bottom: 75px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center; }
+  #wrapper #bio .image img {
+    border-radius: 100%; }
+  #wrapper #themes {
+    min-width: 50%; }
+    #wrapper #themes .list-group-item {
+      line-height: 2; }
+      #wrapper #themes .list-group-item:hover {
+        background-color: rgba(128, 128, 128, 0.4); }
+
+footer {
+  height: 20px; }
+
+/*# sourceMappingURL=employer.css.map */
