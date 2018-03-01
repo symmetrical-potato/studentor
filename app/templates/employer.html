@@ -39,8 +39,9 @@
                 <p>{{description}}</p> 
             </div>
         </div>
-        {% if themes: %}
+        
         <div id="themes">
+            {% if themes: %}
             <h2>
                 Темы проектов
             </h2>
@@ -55,8 +56,9 @@
                 </li>
             {% endfor %}
             </ul>
+            {% endif %}
         </div>
-        {% endif %}
+        
         <button class="btn btn-success btn-lg add-theme-fields">Добавить тему</button>
         
         <form id="new-theme" method="POST">

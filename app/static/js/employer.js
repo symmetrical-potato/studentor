@@ -29,25 +29,44 @@ $(document).ready(function() {
 
                 let response = JSON.parse(resp);
 
+                // console.log(response);
+
+                // console.log(resp);
+                // console.log(response.success);
+
                 if (response.success) {
                     let id = response.success;
                     let name = data.Name;
                     let desc = data.Description;
                     let diploma = data.Diploma;
-                    $('.list-grouping').append(`<li class="list-group-item">${name}
+
+                    let str = `<li class="list-group-item">${name}
                     <span class="badge"><a href="${window.location}/event/${id}">Страница проекта</a></span> </h3>
                     <div class="theme__data">
                         <h4>Описание:</h4>
                         <p>${desc}</p> 
                     </div>
-                </li>`)
+                </li>`
+
+                    let lstgroup = $('.list-grouping').toArray();
+                    if (lstgroup.length == 0) {
+                        $('#themes').append(`<h2>
+                        Темы проектов
+                    </h2>
+                    <ul class="list-grouping"></ul>`);
+                    }
+
+                    $('.list-grouping').append(str);
 
 
                     
                 }
 
                 
-            }.bind(this)
+            }.bind(this),
+            error: function(resp) {
+                console.log("ERR", resp);
+            }
         })
     })
 });
