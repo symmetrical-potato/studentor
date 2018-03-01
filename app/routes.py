@@ -60,6 +60,14 @@ def test_user_profile():
         ("Тема диплома №3", "Описание диплома №3", "Данные диплома №3", "Еще что-то диплома №3")
     ])
 
+@app.route('/empl/test')
+def test_empl_profile():
+    return render_template('employer.html', themes = [
+        (1, "Тема 1","Описание проекта 1"),
+        (2, "Theme 2","Описание проекта 2"),
+        (3, "Stuff 3","Описание проекта 3")
+    ])
+
 @app.route('/test')
 @login_required
 def test():
