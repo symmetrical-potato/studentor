@@ -77,7 +77,29 @@ def get_empl_login():
 
 @app.route('/empl/signup', methods=['GET'])
 def get_empl_signup():
-    return render_template('signup.html', page_title="Employer Sign Up")
+    if request.method == 'GET':
+        res = make_response(render_template('signup.html', page_title="Employer Sign Up",
+                                            action='empl'))
+        res.set_cookie("role", "employer")
+        return res
+    else:
+        username = request.form.get('Username')
+        password = request.form.get('Password')
+        email = request.form.get('Email')
+
+        user = Employer.query.filter_by(login=username).first()
+        if user is not None:
+            return json.dumps({'error':'Пользователь с таким email уже существует.'})
+
+        user = Employer()
+        user.name = username
+        user.login = email
+        user.set_password(password)
+        db.session.add(user)
+        db.session.commit()
+
+        login_user(user)
+        return json.dumps({'success': user.id})
 
 
 @app.route('/stud/test')
