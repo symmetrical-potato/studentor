@@ -9,8 +9,12 @@ $(document).ready(function() {
 
         if (data.css('display') === 'none') {
             data.show(400);
+            data.css('display', 'block');
         } else {
             data.hide(300);
+            setTimeout(() => {
+                data.css('display', 'none');    
+            }, 300);
         }
     });
 });
