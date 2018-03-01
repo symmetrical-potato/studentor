@@ -136,6 +136,27 @@ def empl_signup():
         return json.dumps({'success': user.id})
 
 
+@app.route('/empl/signup', methods=['UPDATE'])
+def update_empl():
+    name = request.form.get('Username')
+    contacts = request.form.get('Contacts')
+    email = request.form.get('Email')
+    description = request.form.get('Description')
+
+    emplr = Employer.query.filter_by(login=email).first()
+    if emplr is None:
+        return json.dumps({'error': 'Такого пользователя не существует.'})
+
+    emplr.name = name
+    emplr.login = email
+    emplr.contacts = contacts
+    emplr.description = description
+
+    db.session.commit()
+
+    return json.dumps({'success': emplr.id})
+
+
 @app.route('/stud/test')
 def test_user_profile():
     return render_template('student.html',
