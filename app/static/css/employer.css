@@ -13,8 +13,10 @@ body {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center; }
-  #wrapper #bio .image img {
-    border-radius: 100%; }
+  #wrapper #bio {
+    min-width: 50%; }
+    #wrapper #bio .image img {
+      border-radius: 100%; }
   #wrapper #themes {
     min-width: 50%; }
     #wrapper #themes .list-group-item {

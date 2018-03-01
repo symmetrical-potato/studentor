@@ -18,7 +18,7 @@ def student_profile(id):
     if request.method == 'GET':
         user = Student.query.filter_by(id=id).first()
         if user is None:
-            return json.dumps({'error': 'Нет такого студента!'})
+            return redirect('https://stackoverflow.com/')
 
         return render_template('student.html', name=user.name,
                                contacts=user.contacts,
@@ -32,7 +32,7 @@ def employer_profile(id):
     if request.method == 'GET':
         user = Employer.query.filter_by(id=id).first()
         if user is None:
-            return json.dumps({'error': 'Нет такого работодателя!'})
+            return redirect('https://stackoverflow.com/')
 
         return render_template('employer.html', name=user.name,
                                contacts=user.contacts,

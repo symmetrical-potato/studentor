@@ -20,14 +20,11 @@ $(document).ready(function() {
         $(".h1-changeable-input").css('display', newDisp);
         $(".h1-changeable-input").val($('.changeable#h1').text());
 
-        $(".h2-changeable-input").css('display', newDisp);
-        $(".h2-changeable-input").val($('.changeable#h2').text());
-
         $(".p-changeable-input").css('display', newDisp);
         $(".p-changeable-input").val($('.changeable#p').text());
     });
 
-    $("input").keyup(function (e) {
+    $("input, textarea").keyup(function (e) {
 
         let tochange = `.changeable#${$(this).attr('class').split('-')[0]}`;
         let newText = $(this).val();
