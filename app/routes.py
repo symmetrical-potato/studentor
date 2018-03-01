@@ -13,17 +13,17 @@ def index():
 
 
 @app.route('/stud/login', methods=['GET', 'POST'])
-def get_stud_login():
+def stud_login():
     if request.method == "GET":
         res = make_response(render_template('login.html', page_title="Student Login",
                                             action="stud"))
         res.set_cookie("role", "student")
         return res
     else:
-        username = request.form.get('Username')
+        email = request.form.get('Username')
         password = request.form.get('Password')
 
-        user = Student.query.filter_by(login=username).first()
+        user = Student.query.filter_by(login=email).first()
         if user is None or not user.check_password(password):
             return json.dumps({'error': 'Неправильный логин или пароль!'})
 
@@ -31,7 +31,7 @@ def get_stud_login():
     return json.dumps({'success': user.id})
 
 @app.route('/stud/signup', methods=['GET', 'POST'])
-def get_stud_signup():
+def stud_signup():
     if request.method == 'GET':
         res = make_response(render_template('signup.html', page_title="Student Sign Up",
                                             action='stud'))
@@ -42,7 +42,7 @@ def get_stud_signup():
         password = request.form.get('Password')
         email = request.form.get('Email')
 
-        user = Student.query.filter_by(login=username).first()
+        user = Student.query.filter_by(login=email).first()
         if user is not None:
             return json.dumps({'error':'Пользователь с таким email уже существует.'})
 
@@ -54,11 +54,11 @@ def get_stud_signup():
         db.session.commit()
 
         login_user(user)
-        return json.dumps({'success': user.id})
+        return json.dumps({'success': 'test'})
 
 
 @app.route('/empl/login', methods=['GET', 'POST'])
-def get_empl_login():
+def empl_login():
     if request.method == "GET":
         res = make_response(render_template('login.html', page_title="Employer Login",
                                             action="empl"))
@@ -76,7 +76,7 @@ def get_empl_login():
     return json.dumps({'success': user.id})
 
 @app.route('/empl/signup', methods=['GET', 'POST'])
-def get_empl_signup():
+def empl_signup():
     if request.method == 'GET':
         res = make_response(render_template('signup.html', page_title="Employer Sign Up",
                                             action='empl'))
@@ -87,7 +87,7 @@ def get_empl_signup():
         password = request.form.get('Password')
         email = request.form.get('Email')
 
-        user = Employer.query.filter_by(login=username).first()
+        user = Employer.query.filter_by(login=email).first()
         if user is not None:
             return json.dumps({'error':'Пользователь с таким email уже существует.'})
 
@@ -136,7 +136,7 @@ def test_empl_theme():
     )
 
 @app.route('/test')
-# @login_required
+@login_required
 def test():
     return  render_template('test.html')
 
