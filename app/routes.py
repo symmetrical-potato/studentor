@@ -25,10 +25,10 @@ def get_stud_login():
 
         user = Student.query.filter_by(login=username).first()
         if user is None or not user.check_password(password):
-            return redirect(url_for('login'))
+            return json.dumps({'error': 'Неправильный логин или пароль!'})
 
         login_user(user)
-        return redirect(url_for('test'))
+    return json.dumps({'success': user.id})
 
 @app.route('/stud/signup', methods=['GET', 'POST'])
 def get_stud_signup():
@@ -57,8 +57,7 @@ def get_stud_signup():
         return json.dumps({'success': user.id})
 
 
-
-@app.route('/empl/login', methods=['GET'])
+@app.route('/empl/login', methods=['GET', 'POST'])
 def get_empl_login():
     if request.method == "GET":
         res = make_response(render_template('login.html', page_title="Employer Login",
@@ -71,25 +70,15 @@ def get_empl_login():
 
         user = Employer.query.filter_by(login=username).first()
         if user is None or not user.check_password(password):
-            return redirect(url_for('login'), code=400)
+            return json.dumps({'error': 'Неправильный логин или пароль!'})
 
         login_user(user)
-        return redirect(url_for('test'))
+    return json.dumps({'success': user.id})
 
 @app.route('/empl/signup', methods=['GET'])
 def get_empl_signup():
     return render_template('signup.html', page_title="Employer Sign Up")
 
-@app.route('/empl/login', methods=['POST'])
-def login_empl():
-    username = request.form.get('Username')
-    password = request.form.get('Password')
-
-    user = Employer.query.filter_by(username=username).first()
-    if user is None or not user.check_password(password):
-        return redirect(url_for('login'), code=400)
-
-    return redirect(url_for('test'))
 
 @app.route('/stud/test')
 def test_user_profile():
@@ -99,10 +88,10 @@ def test_user_profile():
         ("Тема диплома №3", "Описание диплома №3", "Данные диплома №3", "Еще что-то диплома №3")
     ])
 
-@app.route('/test')
-# @login_required
-def test():
-    return  render_template('test.html')
+@app.route('/success')
+@login_required
+def success():
+    return render_template('test.html')
 
 
 @app.route('/logout', methods=["POST"])
