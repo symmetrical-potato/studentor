@@ -171,8 +171,8 @@ def test_empl_theme():
     )
 
 
-@app.route('/empl/event/<int:id>', methods=['GET'])
-def get_event(id):
+@app.route('/empl/<int:empl_id>/event/<int:id>', methods=['GET'])
+def get_event(empl_id, id):
     event = Event.query.filter_by(id=id).first()
     if event is None:
         return json.dumps({'error': 'Такого события не существует.'})
@@ -191,8 +191,8 @@ def get_event(id):
                     event_students=event_students,recommended_students=recommended_students)
 
 
-@app.route('/empl/event/<int:id>', methods=['UPDATE'])
-def update_event(id):
+@app.route('/empl/<int:empl_id>/event/<int:id>', methods=['UPDATE'])
+def update_event(empl_id, id):
     event = Event.query.filter_by(id=id).first()
     if event is None:
         return json.dumps({'error': 'Такого события не существует.'})
@@ -207,7 +207,7 @@ def update_event(id):
 
 
 @app.route('/empl/<int:id>/event', methods=['POST'])
-def post_event():
+def post_event(id):
     name = request.form.get('Name')
     description = request.form.get('Description')
     is_diploma = bool(request.form.get('Diploma'))
