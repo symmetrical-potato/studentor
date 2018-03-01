@@ -1,4 +1,4 @@
-from flask import render_template, redirect, url_for, flash
+from flask import render_template, redirect, url_for, flash, request
 from app import app
 
 
@@ -6,21 +6,33 @@ from app import app
 def hello_world():
     return render_template('index.html')
 
-@app.route('/stud/login')
-def stud_login():
+@app.route('/stud/login', methods=['GET'])
+def get_stud_login():
     return render_template('login.html', page_title="Student Login")
 
-@app.route('/stud/signup')
-def stud_signup():
+@app.route('/stud/signup', methods=['GET'])
+def get_stud_signup():
     return render_template('signup.html', page_title="Student Sign Up")
 
-@app.route('/empl/login')
-def empl_login():
+@app.route('/stud/login', methods=['POST'])
+def login_student():
+    username = request.form.get('Username')
+    password = request.form.get('Password')
+    return str(username + " " + password)
+
+@app.route('/empl/login', methods=['GET'])
+def get_empl_login():
     return render_template('login.html', page_title="Employer Login")
 
-@app.route('/empl/signup')
-def empl_signup():
+@app.route('/empl/signup', methods=['GET'])
+def get_empl_signup():
     return render_template('signup.html', page_title="Employer Sign Up")
+
+@app.route('/empl/login', methods=['POST'])
+def login_empl():
+    username = request.form.get('Username')
+    password = request.form.get('Password')
+    return str(username + " " + password)
 
 @app.route('/stud/test')
 def test_user_profile():
