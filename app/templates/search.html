@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Search</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ url_for('static', filename='css/search.css')}}" />
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">
+                    Studentor
+                </a>
+            </div>
+            <form class="form-inline my-2 my-lg-0" action="/logout" method="POST">
+                <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Logout</button>
+            </form>
+        
+        </div>
+    </nav>
+
+    <div class="row" id="search-bar">
+        <div class="col-lg-6">
+            <div class="input-group">
+            <input type="text" id="search-input-field" class="form-control" aria-label="Text input with dropdown button" placeholder="Найти, что делать дальше">
+            <div class="input-group-btn">
+                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Все
+                </button>
+                <div class="dropdown-menu dropdown-menu-right">
+                <a class="dropdown-item" href="#">Все</a>
+                <a class="dropdown-item" href="#">Стажировки</a>
+                <a class="dropdown-item" href="#">Дипломные проекты</a>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="search-results">
+        <div class="row search-result">
+            <div class="col-lg-7 result-col">
+                <div class="desc">
+                    <h2>Название проекта | <a href="/">Название компании</a></h2>
+                    <a href="/">Ссылка на проект</a>
+                    <div class="project-data">
+                        <p>Описание, </p>
+                    </div>
+                </div>
+                <div class="wrapper">
+                    <div class="inner-wrapper">
+                        Дипломный проект
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>  
+    
+    <script
+			  src="https://code.jquery.com/jquery-3.3.1.min.js"
+			  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+			  crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    
+    <script src="{{url_for('static', filename='js/search.js')}}"></script>
+</body>
+</html>

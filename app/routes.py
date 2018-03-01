@@ -253,3 +253,16 @@ def post_event(id):
 def logout():
     logout_user()
     return redirect(url_for("index"))
+
+
+@app.route('/search', methods=['GET'])
+def search():
+    return render_template('search.html')
+
+@app.route('/search/api', methods=['GET'])
+def search_api():
+    data = [
+        ["Project name", 1, "Company name", 11, "Description", 1, 1.4],
+        ["Another Project name", 3, "Another Super", 11, "Q", 2, 2.3]
+    ]
+    return json.dumps(data)

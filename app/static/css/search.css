@@ -1,0 +1,27 @@
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+
+#search-bar {
+  margin-bottom: 30px; }
+
+.search-result {
+  margin-bottom: 10px; }
+  .search-result .result-col {
+    padding: 5px;
+    display: flex;
+    align-content: center;
+    justify-content: space-evenly;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    border-radius: 5px; }
+    .search-result .result-col .wrapper {
+      display: flex;
+      align-items: center; }
+      .search-result .result-col .wrapper .inner-wrapper {
+        background-color: rgba(0, 66, 255, 0.7);
+        border-radius: 14px;
+        padding: 10px;
+        color: white; }
+
+/*# sourceMappingURL=search.css.map */
