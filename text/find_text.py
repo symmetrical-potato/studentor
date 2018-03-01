@@ -1,20 +1,45 @@
 import elasticsearch as esearch
 
+es = esearch.Elasticsearch()
+
 
 def find_by_string(string):
     '''
-    Поиск по строке во всех дипломах и всех вакансих по строке
+    Поиск по строке во всех дипломах и всех вакансих по строке (сейчас только по дипломам)
     :param string:
     :return: топ-10 результатов наиболее совпадающие по этому запросу
     [
         {
             'type': 'vacancy/document'
             'id': int
-            'text': str
+            'title': str
+            'link' : str
+            'score' : float
         }, ...
     ]
     '''
-    pass
+    quer = { 
+        'query':  
+        {
+            'match' : 
+            {
+                'text' : string,
+            }
+        }
+    }
+    res = []
+    
+    cur = es.search(index='uni', doc_type='diploma', body=quer)
+    for hit in cur['hits']['hits']:
+        res.append({'id'    : int(hit['_id']),
+                   'score'  : hit['_score'],
+                   'title'  : hit['_source']['title'],
+                   'link'   : hit['_source']['link'],
+                   'type'   : 'diploma'})
+        
+    # TODO: Сделать поиск по вакансиям
+        
+    return res
 
 
 def find_by_supervisor(supervisor):

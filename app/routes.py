@@ -14,20 +14,27 @@ def index():
 
 
 @app.route('/stud/<int:id>', methods=['GET', 'POST'])
+@login_required
 def student_profile(id):
     if request.method == 'GET':
         user = Student.query.filter_by(id=id).first()
         if user is None:
             return redirect('https://stackoverflow.com/')
 
+        if current_user.id == id:
+            is_owner = True
+        else:
+            is_owner = False
+
         return render_template('student.html', name=user.name,
                                contacts=user.contacts,
-                               cv=user.cv_hash)
+                               cv=user.cv_hash, is_owner=is_owner)
     else:
         pass
 
 
 @app.route('/empl/<int:id>', methods=['GET', 'POST'])
+@login_required
 def employer_profile(id):
     if request.method == 'GET':
         user = Employer.query.filter_by(id=id).first()
@@ -37,9 +44,15 @@ def employer_profile(id):
         events = Event.query.filter_by(employer_id=id)
         events_tuples = [(event.id, event.name, event.description) for event in events]
 
+        if current_user.id == id:
+            is_owner = True
+        else:
+            is_owner = False
+
         return render_template('employer.html', name=user.name,
                                contacts=user.contacts,
-                               description=user.description, events_tuples=events_tuples)
+                               description=user.description, events_tuples=events_tuples,
+                               is_owner=is_owner)
     else:
         pass
 
@@ -255,6 +268,7 @@ def logout():
     return redirect(url_for("index"))
 
 
+
 @app.route('/search', methods=['GET'])
 def search():
     return render_template('search.html')
@@ -266,3 +280,16 @@ def search_api():
         ["Another Project name", 3, "Another Super", 11, "Q", 2, 2.3]
     ]
     return json.dumps(data)
+
+@app.route('/notification', methods=["POST"])
+def send_notification():
+    student_id = request.form.get('student_id')
+    event_id = request.form.get('event_id')
+    notification = Notification(student_id=student_id,
+                                event_id=event_id,
+                                checked=False)
+    db.session.add(notification)
+    db.session.commit()
+
+    return ''
+
