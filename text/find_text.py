@@ -1,4 +1,5 @@
 import elasticsearch as esearch
+import pandas as pd
 
 es = esearch.Elasticsearch(['localhost', '207.154.222.162'],
     http_auth=('root', 'PwY4VFF8'),
@@ -58,7 +59,28 @@ def find_by_supervisor(supervisor):
             }, ...
         ]
     '''
-    pass
+    st_names = pd.read_csv('st_names.csv')
+    quer = {
+        'size' : 30,
+        'query':
+            {
+                'match' : 
+             {
+                 'supervisor' : supervisor,
+             }
+            }
+    }
+    
+    res = []
+    
+    cur = es.search(index='uni', doc_type='diploma', body=quer)
+    for hit in cur['hits']['hits']:
+        res.append({'student_id'    : int(hit['_id']),
+                    'student_name'  : st_names.name[int(hit['_id'])],
+                    'theme_name'    : hit['_source']['title']})
+        
+        
+    return res
 
 
 def find_students_by_theme(theme_name):
@@ -74,7 +96,28 @@ def find_students_by_theme(theme_name):
                 }, ...
             ]
     '''
-    pass
+    
+    quer = { 
+        'query':  
+        {
+            'match' : 
+            {
+                'text' : theme_name,
+            }
+        }
+    }
+    res = []
+    
+    cur = es.search(index='uni', doc_type='diploma', body=quer)
+    for hit in cur['hits']['hits']:
+        res.append({'id'    : int(hit['_id']),
+                   'score'  : hit['_score'],
+                   'title'  : hit['_source']['title'],
+                   'link'   : hit['_source']['link'],
+                   'type'   : 'diploma'})
+        
+        
+    return res
 
 
 def find_vacancy_by_student(student_name):

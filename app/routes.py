@@ -152,7 +152,7 @@ def empl_signup():
 
 
 @app.route('/empl/<int:id>', methods=['UPDATE'])
-def update_empl():
+def update_empl(id):
     name = request.form.get('Username')
     contacts = request.form.get('Contacts')
     description = request.form.get('Description')
@@ -223,9 +223,16 @@ def get_event(empl_id, id):
             ("Another Nameless", 4, 4.9),
             ("Some RandomGuy", 5, 1)
         ]
+
+    if current_user.id == empl_id:
+        is_owner = True
+    else:
+        is_owner = False
+
     return render_template('theme.html', name=event.name, description=event.description,
                     diploma=event.diploma,
-                    event_students=event_students,recommended_students=recommended_students)
+                    event_students=event_students,recommended_students=recommended_students,
+                           is_owner=is_owner)
 
 
 @app.route('/empl/<int:empl_id>/event/<int:id>', methods=['UPDATE'])

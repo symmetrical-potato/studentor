@@ -36,13 +36,15 @@
                 <img src="https://i.pinimg.com/170x/f0/03/44/f00344d904062ce92b4b3b146060d874--profile-pics-bucket-lists.jpg">
             </div>
             <div class="profile-description col-md-8">
-                <h1>{{name}}
+                <h1><span id="comp_name">{{name}}</span>
+                    {% if is_owner: %}
                     <a href="#">
-                        <i class="material-icons">settings</i>
+                        <i class="material-icons" id="settings">settings</i>
                     </a>
+                    {% endif %}
                 </h1>
-                <p>{{contacts}}</p>
-                <p>{{description}}</p> 
+                <p id="comp_cont">{{contacts}}</p>
+                <p id="comp_desc">{{description}}</p> 
             </div>
         </div>
         
@@ -89,10 +91,45 @@
         
     </footer>
 
+    <div class="modal fade" id="settings-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Настройки</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group>">
+                        <label>Название</label>
+                        <input id="settings-modal__name" type="text" class="form-control" name="Name" placeholder="Название" required="">
+                    </div>
+                    <div class="form-group>">
+                        <label>Описание</label>
+                        <input id="settings-modal__desc" type="text" class="form-control" name="Name" placeholder="Название" required="">
+                    </div>
+                    <div class="form-group">
+                        <label>Контакты</label>
+                        <input id="settings-modal__cont" type="text" class="form-control" name="Name" placeholder="Название" required="">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="settings-modal__save">Save changes</button>
+            </div>
+            </div>
+        </div>
+    </div>
+
     <script
 			  src="https://code.jquery.com/jquery-3.3.1.min.js"
 			  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-			  crossorigin="anonymous"></script>
+              crossorigin="anonymous"></script>
+              <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+              <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="{{url_for('static', filename='js/employer.js')}}"></script>
 </body>
 </html>

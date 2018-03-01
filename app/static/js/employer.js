@@ -1,5 +1,47 @@
 $(document).ready(function() {
 
+    $('#settings').click(function() {
+
+        $('#settings-modal').modal({keyboard: true});
+
+        $("#settings-modal__name").val($("#comp_name").text());
+        $("#settings-modal__cont").val($("#comp_cont").text());
+        $("#settings-modal__desc").val($("#comp_desc").text());
+    });
+
+    $("#settings-modal__save").click(function(e) {
+
+
+        e.preventDefault();
+
+        let data = {
+            Name: $("#settings-modal__name").val(),
+            Contacts: $("#settings-modal__cont").val(),
+            Description: $("#settings-modal__desc").val(),
+        }
+
+        let opts = {
+            url: window.location,
+            method: 'UPDATE',
+            data: data,
+            success: function() {
+                $("#comp_name").text(data.Name);
+                $("#comp_cont").text(data.Contacts);
+                $("#comp_desc").text(data.Description);
+                $('#settings-modal').modal('hide');
+            }.bind(this),
+            error: function(a, b, c) {
+                console.log("ERR", a, b, c);
+            }
+        }
+
+        $.ajax(opts);
+    })
+
+
+
+
+
     $(".theme-link").toArray().forEach(function(el) {
         $(el).attr('href', `${window.location}/event/${$(el).attr('id')}`);
     })
@@ -81,4 +123,8 @@ function validateData(){
         Description: $("#new-theme__desc").val(),
         Diploma: $("#new-theme__isdiploma").prop('checked') ? 1 : 0,
     }
+}
+
+function showPopup() {
+
 }
