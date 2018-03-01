@@ -63,4 +63,5 @@ class Notification(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     student_id = db.Column('student_id', db.Integer, db.ForeignKey('student.id'))
     event_id = db.Column('event_id', db.Integer, db.ForeignKey('event.id'))
+    checked = db.Column('checked', db.Boolean, default=False)
 

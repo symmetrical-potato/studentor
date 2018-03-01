@@ -253,3 +253,16 @@ def post_event(id):
 def logout():
     logout_user()
     return redirect(url_for("index"))
+
+
+@app.route('/notification', methods=["POST"])
+def send_notification():
+    student_id = request.form.get('student_id')
+    event_id = request.form.get('event_id')
+    notification = Notification(student_id=student_id,
+                                event_id=event_id,
+                                checked=False)
+    db.session.add(notification)
+    db.session.commit()
+
+    return ''
