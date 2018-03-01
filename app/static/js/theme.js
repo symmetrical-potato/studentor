@@ -15,6 +15,23 @@ $(document).ready(function() {
         config.cur_mode = tochange;
         let newDisp = mode === 'settings' ? 'block' : 'none';
 
+        if (mode === 'save') {
+            $.ajax({
+                url: window.location,
+                method: 'UPDATE',
+                data: {
+                    Name: $('.changeable#h1').text(),
+                    Description: $('.changeable#p').text(),
+                },
+                success: function(resp) {
+                    console.log('>>>', resp);
+                }.bind(this),
+                error: function(resp, a, b) {
+                    console.log("ERR: ", resp, a, b);
+                }
+            })
+        }
+ 
         $('.material-icons').text(tochange);
 
         $(".h1-changeable-input").css('display', newDisp);
@@ -22,6 +39,8 @@ $(document).ready(function() {
 
         $(".p-changeable-input").css('display', newDisp);
         $(".p-changeable-input").val($('.changeable#p').text());
+
+
     });
 
     $("input, textarea").keyup(function (e) {

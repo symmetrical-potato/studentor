@@ -34,9 +34,12 @@ def employer_profile(id):
         if user is None:
             return redirect('https://stackoverflow.com/')
 
+        events = Event.query.filter_by(employer_id=id)
+        events_tuples = [(event.id, event.name, event.description) for event in events]
+
         return render_template('employer.html', name=user.name,
                                contacts=user.contacts,
-                               description=user.description)
+                               description=user.description, events_tuples=events_tuples)
     else:
         pass
 
@@ -199,9 +202,11 @@ def update_event(empl_id, id):
 
     name = request.form.get('Name')
     description = request.form.get('Description')
-    is_diploma = bool(request.form.get('Diploma'))
 
-    Event.update().where(id=id).values(name=name, description=description, diploma=is_diploma)
+    event = Event.query.filter_by(id=id).first()
+    event.name = name
+    event.description = description
+    db.session.commit()
 
     return json.dumps({'success':id})
 
