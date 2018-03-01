@@ -17,5 +17,7 @@ body {
     display: none; }
   #wrapper #project__description {
     width: 60%; }
+  #wrapper textarea {
+    width: 100%; }
 
 /*# sourceMappingURL=theme.css.map */
