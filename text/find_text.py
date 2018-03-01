@@ -14,6 +14,7 @@ def find_by_string(string):
             'id': int
             'title': str
             'link' : str
+            'score' : float
         }, ...
     ]
     '''
@@ -31,9 +32,12 @@ def find_by_string(string):
     cur = es.search(index='uni', doc_type='diploma', body=quer)
     for hit in cur['hits']['hits']:
         res.append({'id'    : int(hit['_id']),
-                   'score' : hit['_score'],
-                   'title' : hit['_source']['title'],
-                   'link'  : hit['_source']['link']})
+                   'score'  : hit['_score'],
+                   'title'  : hit['_source']['title'],
+                   'link'   : hit['_source']['link'],
+                   'type'   : 'diploma'})
+        
+    # TODO: Сделать поиск по вакансиям
         
     return res
 
