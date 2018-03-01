@@ -5,37 +5,51 @@ from flask_login import login_user, logout_user, current_user, login_required
 
 
 @app.route('/')
-def hello_world():
+@app.route('/index')
+def index():
     return render_template('index.html')
 
-@app.route('/stud/login', methods=['GET'])
+
+@app.route('/stud/login', methods=['GET', 'POST'])
 def get_stud_login():
-    res = make_response(render_template('login.html', page_title="Student Login"))
-    res.set_cookie("role", "student")
-    return res
+    if request.method == "GET":
+        res = make_response(render_template('login.html', page_title="Student Login",
+                                            action="stud"))
+        res.set_cookie("role", "student")
+        return res
+    else:
+        username = request.form.get('Username')
+        password = request.form.get('Password')
+
+        user = Student.query.filter_by(login=username).first()
+        if user is None or not user.check_password(password):
+            return redirect(url_for('login'))
+
+        login_user(user)
+        return redirect(url_for('test'))
 
 @app.route('/stud/signup', methods=['GET'])
 def get_stud_signup():
     return render_template('signup.html', page_title="Student Sign Up")
 
 
-@app.route('/stud/login', methods=['POST'])
-def login_student():
-    username = request.form.get('Username')
-    password = request.form.get('Password')
-
-    user = Student.query.filter_by(username=username).first()
-    if user is None or not user.check_password(password):
-        return redirect(url_for('login'), code=400)
-
-    login_user(user)
-    return redirect(url_for('test'))
-
 @app.route('/empl/login', methods=['GET'])
 def get_empl_login():
-    res = make_response(render_template('login.html', page_title="Employer Logi"))
-    res.set_cookie("role", "employer")
-    return res
+    if request.method == "GET":
+        res = make_response(render_template('login.html', page_title="Employer Login",
+                                            action="empl"))
+        res.set_cookie("role", "employer")
+        return res
+    else:
+        username = request.form.get('Username')
+        password = request.form.get('Password')
+
+        user = Employer.query.filter_by(login=username).first()
+        if user is None or not user.check_password(password):
+            return redirect(url_for('login'), code=400)
+
+        login_user(user)
+        return redirect(url_for('test'))
 
 @app.route('/empl/signup', methods=['GET'])
 def get_empl_signup():
@@ -61,6 +75,11 @@ def test_user_profile():
     ])
 
 @app.route('/test')
-@login_required
+# @login_required
 def test():
     return  render_template('test.html')
+
+@app.route('/logout', methods=["POST"])
+def logout():
+    logout_user()
+    return redirect(url_for("index"))

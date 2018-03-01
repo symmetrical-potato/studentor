@@ -23,7 +23,7 @@ class User():
         self.password_hash = password
 
     def check_password(self, password):
-        return check_password_hash(self.password_hash, password)
+        return self.password_hash == password
 
 
 class Student(UserMixin, User, db.Model):
