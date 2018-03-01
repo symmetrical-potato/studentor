@@ -13,7 +13,9 @@ body {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center; }
+  #wrapper .h1-changeable-input, #wrapper .h2-changeable-input, #wrapper .p-changeable-input {
+    display: none; }
   #wrapper #project__description {
-    max-width: 60%; }
+    width: 60%; }
 
 /*# sourceMappingURL=theme.css.map */

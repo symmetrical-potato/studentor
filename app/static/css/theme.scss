@@ -18,7 +18,11 @@ body {
     justify-content: flex-start;
     align-items: center;
 
+    .h1-changeable-input, .h2-changeable-input, .p-changeable-input {
+        display: none;
+    }
+
     #project__description {
-        max-width: 60%;
+        width: 60%;
     }
 }
