@@ -10,13 +10,19 @@
 </head>
 <body>
     <div id="wrapper">
-        <form>
+        <form action="/{{action}}/login" method="POST">
             <h3>Войти</h3>
-            <input type="text" class="form-control" name="Username" placeholder="Имя пользователя" required="" autofocus="" />
-            <input type="password" class="form-control" name="Password" placeholder="Пароль" required=""/>     		  
+            <input id="username" type="text" class="form-control" name="Username" placeholder="Имя пользователя" required="" autofocus="" />
+            <input id="password" type="password" class="form-control" name="Password" placeholder="Пароль" required=""/>     		  
 
             <button class="btn btn-success">Войти</button>
         </form>    
     </div>
+
+    <script
+			  src="https://code.jquery.com/jquery-3.3.1.min.js"
+			  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+			  crossorigin="anonymous"></script>
+    <script src="{{url_for('static', filename='js/login.js')}}"></script>
 </body>
 </html>

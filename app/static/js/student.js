@@ -1,9 +1,16 @@
 $(document).ready(function() {
     $('.list-group-item').click(function (e){
-        $('.diploma__data').toArray().forEach(element => {
-            $(element).addClass('non-active');
-        });
 
-        $(e.target).children('.diploma__data').removeClass('non-active');
+        console.log("!!!!!!");
+        console.log($(e.target))
+        console.log($(this));
+
+        data = $($(this).children('.diploma__data'));
+
+        if (data.css('display') === 'none') {
+            data.show(400);
+        } else {
+            data.hide(300);
+        }
     });
 });
