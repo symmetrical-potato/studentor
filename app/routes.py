@@ -11,6 +11,16 @@ from flask_login import login_user, logout_user, current_user, login_required
 def index():
     return render_template('index.html')
 
+@app.route('/stud/<int:id>', methods=['GET', 'POST'])
+def student_profile(id):
+    if request.method == 'GET':
+        user = Student.query.filter_by(id=id).first()
+        if user is None:
+            return json.dumps({'error': 'Нет такого студента!'})
+
+        return render_template('student.html')
+    else:
+        pass
 
 @app.route('/stud/login', methods=['GET', 'POST'])
 def stud_login():
