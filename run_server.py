@@ -1,5 +1,5 @@
 from app import app, db
-from database.Models import Student, Employer, Event, Document
+from database.Models import Student, Employer, Event, Document, Notification
 
 
 @app.shell_context_processor
@@ -8,4 +8,5 @@ def make_shell_context():
             'Student': Student,
             'Employer': Employer,
             'Event': Event,
-            'Document': Document}
+            'Document': Document,
+            'Notification': Notification}

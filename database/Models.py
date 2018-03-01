@@ -57,3 +57,10 @@ class Document(db.Model):
     university = db.Column('description', db.String(255))
     year = db.Column('year', db.Integer)
     student_id = db.Column('student_id', db.Integer, db.ForeignKey('student.id'))
+
+
+class Notification(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    student_id = db.Column('student_id', db.Integer, db.ForeignKey('student.id'))
+    event_id = db.Column('event_id', db.Integer, db.ForeignKey('event.id'))
+
