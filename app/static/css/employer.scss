@@ -1,0 +1,43 @@
+body {
+    min-height: 100vh;
+}
+
+.navbar {
+    background-color: rgba($color: #808080, $alpha: 0.3);
+    color: white;
+    margin-bottom: 20px;
+}
+
+#wrapper {
+    min-width: 100%;
+
+    margin-bottom: 75px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+
+    #bio {
+        .image img {
+            border-radius: 100%;
+        }
+    }
+
+    #themes {
+        min-width: 50%;
+
+        .list-group-item {
+            line-height: 2;
+
+            &:hover {
+                background-color:rgba($color: grey, $alpha: 0.4);
+            }
+
+        }
+    }
+}
+
+footer {
+    height: 20px;
+}
