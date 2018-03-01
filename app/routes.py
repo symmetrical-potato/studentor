@@ -82,6 +82,21 @@ def test_empl_profile():
         (3, "Stuff 3","Описание проекта 3")
     ])
 
+@app.route('/empl/theme/test')
+def test_empl_theme():
+    return render_template(
+        'theme.html',
+        project_students = [
+            ("Name 1", 1),
+            ("Name 2", 2),
+        ],
+        recommended_students = [
+            ("Name Lastname", 3, 4.2),
+            ("Another Nameless", 4, 4.9),
+            ("Some RandomGuy", 5, 1)
+        ]
+    )
+
 @app.route('/test')
 # @login_required
 def test():

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Project</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ url_for('static', filename='css/theme.css')}}" />
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">
+                    Studentor
+                </a>
+            </div>
+        </div>
+    </nav>
+    <div id="wrapper">
+        <div id="project__description">
+            <h1>Project name <a href="#">
+                    <i class="material-icons">settings</i>
+                </a></i></h1>
+            <h2>Project description</h2>
+            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aut, aliquam sequi. Provident ullam dolores minima autem ea, iste deleniti facere ipsa magni adipisci. Asperiores consectetur consequatur quibusdam minima dicta distinctio?</p>
+            {% if project_students: %}
+            <h2>Студенты на проекте</h2>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Имя</th>
+                        <th>ID</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for stud in project_students: %}
+                        <tr>
+                            <td>{{stud[0]}}</td>
+                            <td><a href="/stud/{{stud[1]}}">{{stud[1]}}</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% endif %}
+            {% if recommended_students: %}
+            <h2>Рекомендованные студенты</h2>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Имя</th>
+                        <th>ID</th>
+                        <th>Уровень совместимости</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for stud in recommended_students: %}
+                        <tr>
+                            <td>{{stud[0]}}</td>
+                            <td><a href="/stud/{{stud[1]}}">{{stud[1]}}</a></td>
+                            <td>{{stud[2]}}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% endif %}
+            
+        </div>
+    </div>
+</body>
+</html>
