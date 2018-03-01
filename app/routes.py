@@ -171,7 +171,7 @@ def test_empl_theme():
     )
 
 
-@app.route('empl/event/<int:id>', methods=['GET'])
+@app.route('/empl/event/<int:id>', methods=['GET'])
 def get_event(id):
     event = Event.query.filter_by(id=id).first()
     if event is None:
@@ -191,7 +191,7 @@ def get_event(id):
                     event_students=event_students,recommended_students=recommended_students)
 
 
-@app.route('empl/event/<int:id>', methods=['UPDATE'])
+@app.route('/empl/event/<int:id>', methods=['UPDATE'])
 def update_event(id):
     event = Event.query.filter_by(id=id).first()
     if event is None:
@@ -206,7 +206,7 @@ def update_event(id):
     return json.dumps({'success':id})
 
 
-@app.route('empl/<int:id>/event', methods=['POST'])
+@app.route('/empl/<int:id>/event', methods=['POST'])
 def post_event():
     name = request.form.get('Name')
     description = request.form.get('Description')
