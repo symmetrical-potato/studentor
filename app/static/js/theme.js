@@ -24,8 +24,11 @@ $(document).ready(function() {
                     Description: $('.changeable#p').text(),
                 },
                 success: function(resp) {
-                    console.log(resp);
+                    console.log('>>>', resp);
                 }.bind(this),
+                error: function(resp, a, b) {
+                    console.log("ERR: ", resp, a, b);
+                }
             })
         }
  
