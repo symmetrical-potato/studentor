@@ -25,7 +25,11 @@ def empl_signup():
 
 @app.route('/stud/test')
 def test_user_profile():
-    return render_template('student.html')
+    return render_template('student.html', diplomas = [
+        ("Тема диплома №1", "Описание диплома №1", "Данные диплома №1", "Еще что-то диплома №1"),
+        ("Тема диплома №2", "Описание диплома №2", "Данные диплома №2", "Еще что-то диплома №2"),
+        ("Тема диплома №3", "Описание диплома №3", "Данные диплома №3", "Еще что-то диплома №3")
+    ])
 
 if __name__ == '__main__':
     app.run()

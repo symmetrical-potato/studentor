@@ -1,3 +1,7 @@
+body {
+    min-height: 100vh;
+}
+
 .navbar {
     background-color: rgba($color: #808080, $alpha: 0.3);
     color: white;
@@ -5,7 +9,6 @@
 }
 
 #wrapper {
-    min-height: 100vh;
     min-width: 100%;
 
     display: flex;
@@ -16,6 +19,18 @@
     #bio {
         .image img {
             border-radius: 100%;
+        }
+    }
+
+    #diplomas {
+        min-width: 50%;
+
+        .list-group-item {
+            line-height: 2;
+
+            &:hover {
+                background-color:rgba($color: grey, $alpha: 0.4);
+            }
         }
     }
 }
