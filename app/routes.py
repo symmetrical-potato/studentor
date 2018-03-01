@@ -1,19 +1,31 @@
 from flask import render_template, redirect, url_for, flash
 from app import app
-from app.forms import LoginFormStudent
 
 
 @app.route('/')
-@app.route('/index')
-def index():
+def hello_world():
     return render_template('index.html')
 
+@app.route('/stud/login')
+def stud_login():
+    return render_template('login.html', page_title="Student Login")
 
-@app.route('/login_student', methods=['GET', 'POST'])
-def login():
-    form = LoginFormStudent()
-    if form.validate_on_submit():
-        flash('Login requested for user {}, remember_me={}'.format(
-            form.username.data, form.remember_me.data))
-        return redirect(url_for('index'))
-    return render_template('login_student.html',  title='Sign In', form=form)
+@app.route('/stud/signup')
+def stud_signup():
+    return render_template('signup.html', page_title="Student Sign Up")
+
+@app.route('/empl/login')
+def empl_login():
+    return render_template('login.html', page_title="Employer Login")
+
+@app.route('/empl/signup')
+def empl_signup():
+    return render_template('signup.html', page_title="Employer Sign Up")
+
+@app.route('/stud/test')
+def test_user_profile():
+    return render_template('student.html', diplomas = [
+        ("Тема диплома №1", "Описание диплома №1", "Данные диплома №1", "Еще что-то диплома №1"),
+        ("Тема диплома №2", "Описание диплома №2", "Данные диплома №2", "Еще что-то диплома №2"),
+        ("Тема диплома №3", "Описание диплома №3", "Данные диплома №3", "Еще что-то диплома №3")
+    ])
