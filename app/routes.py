@@ -75,7 +75,7 @@ def get_empl_login():
         login_user(user)
     return json.dumps({'success': user.id})
 
-@app.route('/empl/signup', methods=['GET'])
+@app.route('/empl/signup', methods=['GET', 'POST'])
 def get_empl_signup():
     if request.method == 'GET':
         res = make_response(render_template('signup.html', page_title="Employer Sign Up",
