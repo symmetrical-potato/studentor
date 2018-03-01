@@ -34,9 +34,12 @@ def employer_profile(id):
         if user is None:
             return redirect('https://stackoverflow.com/')
 
+        events = Event.query.filter_by(employer_id=id)
+        events_tuples = [(event.id, event.name, event.description) for event in events]
+
         return render_template('employer.html', name=user.name,
                                contacts=user.contacts,
-                               description=user.description)
+                               description=user.description, events_tuples=events_tuples)
     else:
         pass
 
