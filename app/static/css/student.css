@@ -8,6 +8,7 @@ body {
 
 #wrapper {
   min-width: 100%;
+  margin-bottom: 75px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -20,5 +21,10 @@ body {
       line-height: 2; }
       #wrapper #diplomas .list-group-item:hover {
         background-color: rgba(128, 128, 128, 0.4); }
+      #wrapper #diplomas .list-group-item .diploma__data {
+        display: none; }
+
+footer {
+  height: 20px; }
 
 /*# sourceMappingURL=student.css.map */

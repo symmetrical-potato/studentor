@@ -11,6 +11,8 @@ body {
 #wrapper {
     min-width: 100%;
 
+    margin-bottom: 75px;
+
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -31,6 +33,14 @@ body {
             &:hover {
                 background-color:rgba($color: grey, $alpha: 0.4);
             }
+
+            .diploma__data {
+                display: none;
+            }
         }
     }
+}
+
+footer {
+    height: 20px;
 }
