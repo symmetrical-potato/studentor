@@ -202,9 +202,11 @@ def update_event(empl_id, id):
 
     name = request.form.get('Name')
     description = request.form.get('Description')
-    is_diploma = bool(request.form.get('Diploma'))
 
-    Event.update().where(id=id).values(name=name, description=description, diploma=is_diploma)
+    event = Event.query.filter_by(id=id).first()
+    event.name = name
+    event.description = description
+    db.session.commit()
 
     return json.dumps({'success':id})
 
