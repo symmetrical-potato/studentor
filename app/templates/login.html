@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{{ page_title }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ url_for('static', filename='css/login.css')}}" />
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+<body>
+    <div id="wrapper">
+        <form>
+            <h3>Войти</h3>
+            <input type="text" class="form-control" name="Username" placeholder="Имя пользователя" required="" autofocus="" />
+            <input type="password" class="form-control" name="Password" placeholder="Пароль" required=""/>     		  
+
+            <button class="btn btn-success">Войти</button>
+        </form>    
+    </div>
+</body>
+</html>
