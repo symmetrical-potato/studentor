@@ -1,3 +1,5 @@
+import json
+
 from flask import render_template, redirect, url_for, flash, request, abort, make_response
 from app import app
 from database.Models import *
@@ -28,9 +30,32 @@ def get_stud_login():
         login_user(user)
         return redirect(url_for('test'))
 
-@app.route('/stud/signup', methods=['GET'])
+@app.route('/stud/signup', methods=['GET', 'POST'])
 def get_stud_signup():
-    return render_template('signup.html', page_title="Student Sign Up")
+    if request.method == 'GET':
+        res = make_response(render_template('signup.html', page_title="Student Sign Up",
+                                            action='stud'))
+        res.set_cookie("role", "student")
+        return res
+    else:
+        username = request.form.get('Username')
+        password = request.form.get('Password')
+        email = request.form.get('Email')
+
+        user = Student.query.filter_by(login=username).first()
+        if user is not None:
+            return json.dumps({'error':'Пользователь с таким email уже существует.'})
+
+        user = Student()
+        user.name = username
+        user.login = email
+        user.set_password(password)
+        db.session.add(user)
+        db.session.commit()
+
+        login_user(user)
+        return json.dumps({'success': user.id})
+
 
 
 @app.route('/empl/login', methods=['GET'])
@@ -78,6 +103,7 @@ def test_user_profile():
 # @login_required
 def test():
     return  render_template('test.html')
+
 
 @app.route('/logout', methods=["POST"])
 def logout():
