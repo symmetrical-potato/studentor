@@ -17,11 +17,12 @@ $(document).ready(function () {
             method: 'POST',
             data: data,
             success: function(resp) {
-                response = JSON.parse(resp);
-                if (resp.error) {
-                    $("#wrapper").append(`<div class="alert alert-danger">${resp.error}</div>`);
-                } else if (resp.success) {
-                    window.location = `/${url.split('/')[1]}/${resp.success}`;
+                var response = JSON.parse(resp);
+                console.log(response)
+                if (response.error) {
+                    $("#wrapper").append(`<div class="alert alert-danger">${response.error}</div>`);
+                } else if (response.success) {
+                    window.location = `/${url.split('/')[1]}/${response.success}`;
                 } else {
                     $("#wrapper").append(`<div class="alert alert-danger">Unknown error!</div>`);
                 }
