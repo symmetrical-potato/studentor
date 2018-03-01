@@ -150,7 +150,7 @@ def empl_signup():
 
 
 @app.route('/empl/<int:id>', methods=['UPDATE'])
-def update_empl():
+def update_empl(id):
     name = request.form.get('Username')
     contacts = request.form.get('Contacts')
     description = request.form.get('Description')
