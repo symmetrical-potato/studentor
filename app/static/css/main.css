@@ -3,6 +3,21 @@
   min-width: 100%;
   display: flex;
   align-items: center;
-  justify-content: center; }
+  justify-content: center;
+  flex-direction: column; }
+  #main #ops {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; }
+    #main #ops #student-service {
+      border-right: 1px solid black; }
+    #main #ops .ops__wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-direction: column;
+      padding: 20px; }
+      #main #ops .ops__wrapper button {
+        margin-top: 5px; }
 
 /*# sourceMappingURL=main.css.map */

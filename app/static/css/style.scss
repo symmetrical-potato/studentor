@@ -5,4 +5,28 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
+
+    #ops {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        #student-service {
+            border-right: 1px solid black;
+        }
+
+        .ops__wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-direction: column;
+            padding: 20px;
+
+            button {
+                margin-top: 5px;
+            }
+        }
+
+    }
 }
