@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Profile</title>
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ url_for('static', filename='css/student.css')}}" />
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">
+                    Studentor
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div id="wrapper">
+        <div id="bio" class="row">
+            <div class="image col-md-4">
+                <img src="https://i.pinimg.com/170x/f0/03/44/f00344d904062ce92b4b3b146060d874--profile-pics-bucket-lists.jpg">
+            </div>
+            <div class="profile-description col-md-8">
+                <h1>Name Surname 
+                    <a href="#">
+                        <i class="material-icons">settings</i>
+                    </a>
+                </h1>
+                <p>This is a short bio to just get the feeling how it's going to look</p> 
+            </div>
+        </div>
+        {% if diplomas: %}
+        <div id="diplomas" class="row">
+            <div class="diploma-wrapper col-md-12">
+                <h2>Дипломы</h2>
+                <ul class="diploma-list list-group">
+                    {% for d in diplomas: %}
+                    <li class="list-group-item">
+                        <h3>{{ d[0] }}</h3>
+                        <div class="diploma__data non-active">
+                            <h4>Описание:</h4>
+                            <p>{{d[1]}}</p>
+                            <h4>Данные:</h4>
+                            <p>{{d[2]}}</p>
+                            <h4>Еще что-то:</h4>
+                            <p>{{d[3]}}</p>
+                        </div>
+                    </li>
+
+                    {% endfor %}
+                </ul> 
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <script
+			  src="https://code.jquery.com/jquery-3.3.1.min.js"
+			  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+			  crossorigin="anonymous"></script>
+    <script src="{{url_for('static', filename='js/student.js')}}"></script>
+</body>
+</html>

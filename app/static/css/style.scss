@@ -8,13 +8,15 @@
     flex-direction: column;
 
     #ops {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
+        // display: flex;
+        // align-items: center;
+        // justify-content: space-between;
 
-        #student-service {
-            border-right: 1px solid black;
-        }
+        // #student-service {
+        //     border-right: 1px solid black;
+        // }
+
+        min-width: 50%;
 
         .ops__wrapper {
             display: flex;

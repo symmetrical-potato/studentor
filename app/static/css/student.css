@@ -1,0 +1,24 @@
+body {
+  min-height: 100vh; }
+
+.navbar {
+  background-color: rgba(128, 128, 128, 0.3);
+  color: white;
+  margin-bottom: 20px; }
+
+#wrapper {
+  min-width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center; }
+  #wrapper #bio .image img {
+    border-radius: 100%; }
+  #wrapper #diplomas {
+    min-width: 50%; }
+    #wrapper #diplomas .list-group-item {
+      line-height: 2; }
+      #wrapper #diplomas .list-group-item:hover {
+        background-color: rgba(128, 128, 128, 0.4); }
+
+/*# sourceMappingURL=student.css.map */
