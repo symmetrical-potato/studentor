@@ -23,5 +23,9 @@ def empl_login():
 def empl_signup():
     return render_template('signup.html', page_title="Employer Sign Up")
 
+@app.route('/stud/test')
+def test_user_profile():
+    return render_template('student.html')
+
 if __name__ == '__main__':
     app.run()
