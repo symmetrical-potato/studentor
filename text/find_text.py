@@ -1,6 +1,9 @@
 import elasticsearch as esearch
 
-es = esearch.Elasticsearch()
+es = esearch.Elasticsearch(['localhost', '207.154.222.162'],
+    http_auth=('root', 'PwY4VFF8'),
+    scheme="https",
+    port=443)
 
 
 def find_by_string(string):
