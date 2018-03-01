@@ -21,11 +21,14 @@
     </nav>
     <div id="wrapper">
         <div id="project__description">
-            <h1>Project name <a href="#">
+            <h1><span class="changeable" id="h1">Project name</span> <a href="#" id="change-project">
                     <i class="material-icons">settings</i>
                 </a></i></h1>
-            <h2>Project description</h2>
-            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aut, aliquam sequi. Provident ullam dolores minima autem ea, iste deleniti facere ipsa magni adipisci. Asperiores consectetur consequatur quibusdam minima dicta distinctio?</p>
+            <input type="text" class="h1-changeable-input" value="Project name">
+            <h2><span class="changeable" id="h2">Project description</span></h2>
+            <input type="text" class="h2-changeable-input" value="Project description">
+            <p class="changeable" id="p">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aut, aliquam sequi. Provident ullam dolores minima autem ea, iste deleniti facere ipsa magni adipisci. Asperiores consectetur consequatur quibusdam minima dicta distinctio?</p>
+            <input type="text" class="p-changeable-input" value="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aut, aliquam sequi. Provident ullam dolores minima autem ea, iste deleniti facere ipsa magni adipisci. Asperiores consectetur consequatur quibusdam minima dicta distinctio?">
             {% if project_students: %}
             <h2>Студенты на проекте</h2>
             <table class="table table-striped">
@@ -69,5 +72,11 @@
             
         </div>
     </div>
+    
+    <script
+			  src="https://code.jquery.com/jquery-3.3.1.min.js"
+			  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+			  crossorigin="anonymous"></script>
+    <script src="{{url_for('static', filename='js/theme.js')}}"></script>
 </body>
 </html>
