@@ -115,6 +115,26 @@ def test_user_profile():
 def success():
     return render_template('test.html')
 
+    
+@app.route('/empl/theme/test')
+def test_empl_theme():
+    return render_template(
+        'theme.html',
+        project_students = [
+            ("Name 1", 1),
+            ("Name 2", 2),
+        ],
+        recommended_students = [
+            ("Name Lastname", 3, 4.2),
+            ("Another Nameless", 4, 4.9),
+            ("Some RandomGuy", 5, 1)
+        ]
+    )
+
+@app.route('/test')
+# @login_required
+def test():
+    return  render_template('test.html')
 
 @app.route('/logout', methods=["POST"])
 def logout():
