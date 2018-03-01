@@ -18,9 +18,25 @@ def student_profile(id):
         if user is None:
             return json.dumps({'error': 'Нет такого студента!'})
 
-        return render_template('student.html')
+        return render_template('student.html', name=user.name,
+                               contacts=user.contacts,
+                               cv=user.cv_hash)
     else:
         pass
+
+@app.route('/empl/<int:id>', methods=['GET', 'POST'])
+def employer_profile(id):
+    if request.method == 'GET':
+        user = Employer.query.filter_by(id=id).first()
+        if user is None:
+            return json.dumps({'error': 'Нет такого работодателя!'})
+
+        return render_template('employer.html', name=user.name,
+                               contacts=user.contacts,
+                               description=user.description)
+    else:
+        pass
+
 
 @app.route('/stud/login', methods=['GET', 'POST'])
 def stud_login():
