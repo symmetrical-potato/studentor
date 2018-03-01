@@ -8,6 +8,12 @@
     <link rel="stylesheet" type="text/css" media="screen" href="{{ url_for('static', filename='css/employer.css')}}" />
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script>
+        function getEventUrl(eventId) {
+            console.log(window.location);
+            return `${window.location}/event/${eventId}`;
+        }
+    </script>
 </head>
 <body>
     <nav class="navbar navbar-inverse">
@@ -41,14 +47,14 @@
         </div>
         
         <div id="themes">
-            {% if themes: %}
+            {% if events_tuples: %}
             <h2>
                 Темы проектов
             </h2>
             <ul class="list-grouping">
-            {% for t in themes: %}
+            {% for t in events_tuples: %}
                 <li class="list-group-item">
-                    <h3>{{t[1]}} <span class="badge"><a href="/">Страница проекта</a></span> </h3>
+                    <h3>{{t[1]}} <span class="badge"><a href="" class="theme-link" id="{{t[0]}}">Страница проекта</a></span> </h3>
                     <div class="theme__data">
                         <h4>Описание:</h4>
                         <p>{{t[2]}}</p> 

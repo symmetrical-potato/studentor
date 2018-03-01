@@ -1,5 +1,8 @@
 $(document).ready(function() {
 
+    $(".theme-link").toArray().forEach(function(el) {
+        $(el).attr('href', `${window.location}/event/${$(el).attr('id')}`);
+    })
 
     $(".add-theme-fields").click(function(e) {
 
