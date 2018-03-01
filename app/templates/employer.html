@@ -57,7 +57,25 @@
             </ul>
         </div>
         {% endif %}
+        <button class="btn btn-success btn-lg add-theme-fields">Добавить тему</button>
+        
+        <form id="new-theme" method="POST">
+            <h3>Добавление новой темы</h3>
+            <div class="form-group">
+                <input id="new-theme__name" type="text" class="form-control" name="Name" placeholder="Название" required="">
+            </div>
+            <div class="form-group">
+                <textarea class="form-control" id="new-theme__desc" type="text" name="Desc" placeholder="Описание" required=""></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="new-theme__isdiploma">Дипломный проект или нет</label>
+                <input type="checkbox" id="new-theme__isdiploma" name="Diploma">
+            </div>
+            <button class="btn btn-success" id="add-theme">Добавить</button>
+        </form>
     </div>
+
 
     <footer>
         

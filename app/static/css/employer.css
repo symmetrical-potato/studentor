@@ -23,6 +23,15 @@ body {
       line-height: 2; }
       #wrapper #themes .list-group-item:hover {
         background-color: rgba(128, 128, 128, 0.4); }
+  #wrapper #new-theme {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 40%; }
+    #wrapper #new-theme .form-group {
+      width: 100%;
+      margin-top: 5px; }
 
 footer {
   height: 20px; }

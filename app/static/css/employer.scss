@@ -40,6 +40,19 @@ body {
 
         }
     }
+
+    #new-theme {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-width: 40%;
+
+        .form-group {
+            width: 100%;
+            margin-top: 5px;
+        }
+    }
 }
 
 footer {
