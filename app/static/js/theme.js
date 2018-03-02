@@ -16,7 +16,7 @@ $(document).ready(function() {
         console.log(studentId, eventId);
 
         $.ajax({
-            url: '/notifications',
+            url: '/notification',
             method: 'POST',
             data: {
                 student_id: studentId,
