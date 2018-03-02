@@ -15,3 +15,5 @@ esearch = es
 
 
 from app import routes
+
+routes.import_vacancies()

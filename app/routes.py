@@ -1,5 +1,6 @@
 import json
 
+from datetime import datetime
 from flask import render_template, redirect, url_for, flash, request, abort, make_response
 from app import app
 from database.Models import *
@@ -294,6 +295,10 @@ def post_event(id):
 
     db.session.add(event)
     db.session.commit()
+
+    find_text.add_to_index({"text":event.name+" "+event.description, "date":datetime.utcnow(),
+                            "id":event.id})
+
     print('{} {} {} {}'.format(event.name, event.description, event.diploma, event.employer_id))
     return json.dumps({'success': event.id})
 
@@ -372,3 +377,11 @@ def reject_notification():
     event_id = request.form.get('event_id')
     Notification.query.filter_by(student_id=student_id, event_id=event_id).delete()
     return json.dumps({'success': 'success'})
+
+
+def import_vacancies():
+    vacancies = find_text.get_all_vacancies()
+    for i, v in enumerate(vacancies):
+        print(v)
+        if i > 10:
+            return
