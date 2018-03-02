@@ -1,5 +1,6 @@
 import json
 
+from datetime import datetime
 from flask import render_template, redirect, url_for, flash, request, abort, make_response
 from app import app
 from database.Models import *
@@ -294,6 +295,10 @@ def post_event(id):
 
     db.session.add(event)
     db.session.commit()
+
+    find_text.add_to_index({"text":event.name+" "+event.description, "date":datetime.utcnow(),
+                            "id":event.id})
+
     print('{} {} {} {}'.format(event.name, event.description, event.diploma, event.employer_id))
     return json.dumps({'success': event.id})
 
