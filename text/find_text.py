@@ -105,7 +105,7 @@ def find_students_by_theme(theme_name):
     }
     res = []
     
-    cur = es.search(index='uni', doc_type='diploma', body=quer)
+    cur = es.search(index='uni', doc_type='diplomaf', body=quer)
     for hit in cur['hits']['hits']:
         res.append({'id'    : int(hit['_id']),
                    'score'  : hit['_score'],
@@ -117,18 +117,37 @@ def find_students_by_theme(theme_name):
     return res
 
 
-def find_vacancy_by_student(student_name):
+def find_event_by_string(string):
     '''
-    Поиск наиболее подходящих вакансий для студента
-    :param student_name string: фио
-    :return:top-5 vacancies sorted by distance
-        [
+    Поиск по строке во всех event-ах
+    :param string:
+    :return: топ-10 результатов наиболее совпадающие по этому запросу
+    [
+        {
+            'type': 'vacancy/document'
+            'id': int
+            'title': str
+            'link' : str
+            'score' : float
+        }, ...
+    ]
+    '''
+    quer = { 
+        'query':  
+        {
+            'match' : 
             {
-                'vacancy_name': str,
-                'vacancy_id': integer,
-                'rating': float
-            }, ...
-        ]
-    '''
-    pass
-
+                'text' : string,
+            }
+        }
+    }
+    res = []
+    
+    cur = es.search(index='events', doc_type='internship', body=quer)
+    for hit in cur['hits']['hits']:
+        res.append({'id'    : int(hit['_id']),
+                   'score'  : hit['_score'],
+                   'text'   : hit['_source']['text'],
+                   'date'   : hit['_source']['date']})
+        
+    return res
