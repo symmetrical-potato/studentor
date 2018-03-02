@@ -231,10 +231,11 @@ def get_event(empl_id, id):
             ("Name 1", 1),
             ("Name 2", 2),
         ]
-
-    query = event.name + " " + event.description
+    print(event.description.encode().decode('utf-8'))
+    query = '{} {}'.format(str(event.name), str(event.description))
+    print(query)
     res = find_text.find_students_by_theme(query)
-
+    print(res)
     def enrich_response(record):
         student_id = record['id']
         student = Student.query.filter_by(id=student_id).first()
@@ -282,7 +283,7 @@ def post_event(id):
     description = request.form.get('Description')
     is_diploma = bool(request.form.get('Diploma'))
     employer_id = id
-
+    print('{} {} {} {}'.format(name, description, employer_id, is_diploma))
     event = Event()
     event.name = name
     event.description = description
@@ -291,7 +292,7 @@ def post_event(id):
 
     db.session.add(event)
     db.session.commit()
-
+    print('{} {} {} {}'.format(event.name, event.description, event.diploma, event.employer_id))
     return json.dumps({'success': event.id})
 
 
