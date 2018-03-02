@@ -292,6 +292,8 @@ def search_api():
     def enrich_response(record):
         event_id = record['id']
         event_record = Event.query.filter_by(id=event_id).first()
+        if event_record is None:
+            return {}
         company_id = event_record.employer_id
         company_name = Employer.query.filter_by(id=company_id).first().name
         return {
