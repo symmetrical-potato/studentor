@@ -120,10 +120,7 @@ function validateData(){
     return {
         Name: $("#new-theme__name").val(),
         Description: $("#new-theme__desc").val(),
-        Diploma: 1,
+        Diploma: $("#radio__diploma").prop('checked') ? 1 : 0,
     }
 }
 
-function showPopup() {
-
-}
