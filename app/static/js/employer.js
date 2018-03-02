@@ -89,7 +89,7 @@ $(document).ready(function() {
                     let desc = data.Description;
                     let diploma = data.Diploma;
 
-                    let str = `<li class="list-group-item">${name}
+                    let str = `<li class="list-group-item"><h3>${name}
                     <span class="badge"><a href="${window.location}/event/${id}">Страница проекта</a></span> </h3>
                     <div class="theme__data">
                         <h4>Описание:</h4>
@@ -125,7 +125,7 @@ function validateData(){
     return {
         Name: $("#new-theme__name").val(),
         Description: $("#new-theme__desc").val(),
-        Diploma: $("#new-theme__isdiploma").prop('checked') ? 1 : 0,
+        Diploma: $("#radio__diploma").prop('checked') ? 1 : 0,
     }
 }
 

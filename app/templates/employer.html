@@ -80,10 +80,20 @@
                 <textarea class="form-control" id="new-theme__desc" type="text" name="Desc" placeholder="Описание" required=""></textarea>
             </div>
             
-            <div class="form-group">
-                <label for="new-theme__isdiploma">Дипломный проект или нет</label>
-                <input type="checkbox" id="new-theme__isdiploma" name="Diploma">
-            </div>
+            
+            <!--Radio group-->
+            <div class="form-check">
+                    <input name="radio__choice" type="radio" class="with-gap" id="radio__diploma">
+                    <label for="radio__diploma">Дипломный проект</label>
+                </div>
+                
+                <div class="form-check">
+                    <input name="radio__choice" type="radio" class="with-gap" id="radio__intern" checked>
+                    <label for="radio__intern">Стажировка</label>
+                </div>
+            
+                <!--Radio group-->
+                                
             <button class="btn btn-success" id="add-theme">Добавить</button>
         </form>
     </div>
