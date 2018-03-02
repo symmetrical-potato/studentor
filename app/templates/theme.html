@@ -37,7 +37,7 @@
             <p class="changeable" id="p">{{description}}</p>
             <!-- <input type="text" id="2" class="p-changeable-input"> -->
             <textarea name="Text1" cols="40" rows="5" id="2" class="p-changeable-input"></textarea>
-            {% if project_students: %}
+            {% if is_owner and project_students: %}
             <h2>Студенты которые подали заявки</h2>
             <table class="table table-striped">
                 <thead>
@@ -56,7 +56,7 @@
                 </tbody>
             </table>
             {% endif %}
-            {% if recommended_students: %}
+            {% if is_owner and recommended_students: %}
             <h2>Рекомендованные студенты</h2>
             <table class="table table-striped">
                 <thead>

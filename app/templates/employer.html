@@ -67,7 +67,9 @@
             {% endif %}
         </div>
         
+        {% if is_owner: %}
         <button class="btn btn-success btn-lg add-theme-fields">Добавить тему</button>
+        {% endif %}
         
         <form id="new-theme" method="POST">
             <h3>Добавление новой темы</h3>
