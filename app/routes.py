@@ -286,7 +286,24 @@ def search():
 def search_api():
     query = request.args.get('q')
     res = find_text.find_by_string(query)
-    return json.dumps(res)
+
+    def enrich_response(record):
+        event_id = record['id']
+        event_record = Event.query.find_by(id=id).first()
+        company_id = event_record.company_id
+        company_name = Employer.query.find_by(id=company_id).name
+        return {
+            'id': record['id'],
+            'score': record['score'],
+            'company_id': company_id,
+            'company_name': company_name,
+            'type': 1 if record['type'] == 'diploma' else 2,
+            'name': record['title'],
+            'description': event_record.description
+        }
+
+    return json.dumps(map(enrich_response, res))
+
 
 @app.route('/notification', methods=["POST"])
 def send_notification():

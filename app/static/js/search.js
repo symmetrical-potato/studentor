@@ -59,6 +59,9 @@ function reloadResults(data) {
 
     const parsed = JSON.parse(data);
 
+    console.log(parsed[0]);
+    return;
+
     $('.search-result').toArray().forEach(element => {
         $(element).remove();
     });
