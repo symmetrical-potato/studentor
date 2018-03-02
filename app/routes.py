@@ -380,8 +380,22 @@ def reject_notification():
 
 
 def import_vacancies():
-    vacancies = find_text.get_all_vacancies()
-    for i, v in enumerate(vacancies):
-        print(v)
-        if i > 10:
-            return
+    ids = {
+        23: 'C#',
+        22: 'финансы',
+        21: 'еда',
+        20: 'переезд',
+        19: 'java python'
+    }
+
+    for key in ids:
+        vacancies = find_text.find_event_by_string(ids[key])
+        for v in vacancies:
+            event = Event()
+            event.name = 'Стажировка'
+            event.description = v['text']
+            event.employer_id = key
+            event.diploma = False
+            db.session.add(event)
+
+    db.session.commit()
