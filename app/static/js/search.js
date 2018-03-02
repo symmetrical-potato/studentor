@@ -22,7 +22,7 @@ $(document).ready(function() {
 
         let query = $("#search-input-field").val();
         
-        if (query.length > 5) {
+        if (query.length >= 3) {
             makeAjaxCall($("#search-input-field").val());
         }
         
@@ -36,7 +36,7 @@ $(document).ready(function() {
 
         console.log(query);
 
-        if (query.length > 5) {
+        if (query.length >= 3) {
             reloadResults(makeAjaxCall(query));
         }
 
@@ -67,7 +67,7 @@ function reloadResults(data) {
     });
 
     const sorted = parsed.sort((a, b) => {
-        if (a[6] >= b[6]) {
+        if (a.id >= b.id) {
             return -1;
         } else {
             return 1;
@@ -76,17 +76,15 @@ function reloadResults(data) {
 
     const filtered = sorted.filter(el => {
 
-        console.log(el[5]);
-        console.log(el[5] == 1);
-        console.log(el[5] == 2);
+        console.log(el.type);
+        console.log(el.type == 1);
+        console.log(el.type == 2);
 
         if (config.mode === 'vac') {
-            return el[5] == 2
+            return el.type == 2
         } else if (config.mode === 'dip') {
-            return el[5] == 1
+            return el.type == 1
         }
-
-
 
         return true;
     });
@@ -96,15 +94,15 @@ function reloadResults(data) {
         const new_li = ` <div class="row search-result">
         <div class="col-lg-7 result-col">
             <div class="desc">
-                <h2>${element[0]} | <a href="/empl/${element[1]}">${element[2]}</a></h2>
-                <a href="/empl/${element[1]}/event/${element[3]}">Ссылка на проект</a>
+                <h2>${element.name} | <a href="/empl/${element.company_id}">${element.company_name}</a></h2>
+                <a href="/empl/${element.company_id}/event/${element.id}">Ссылка на проект</a>
                 <div class="project-data">
-                    <p>${element[4]}</p>
+                    <p>${element.description}</p>
                 </div>
             </div>
             <div class="wrapper">
                 <div class="inner-wrapper">
-                    ${element[5] == '1' ? 'Дипломный проект' : 'Стажировка'}
+                    ${element.type == '1' ? 'Дипломный проект' : 'Стажировка'}
                 </div>
             </div>
         </div>

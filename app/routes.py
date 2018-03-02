@@ -322,7 +322,7 @@ def search_api__():
 
     events = Event.query.all()
 
-    filtered_events = filter(lambda event: query in (event.name+" "+event.description), events)
+    filtered_events = filter(lambda event: query in event.name or query in event.description, events)
 
     print(filtered_events)
 
