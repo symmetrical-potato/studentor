@@ -71,7 +71,7 @@ $(document).ready(function() {
         console.log(window.location.toString())
 
         $.ajax({
-            url: url,
+            url: window.location,
             method: "POST",
             data: data,
             success: function(resp) {
@@ -118,8 +118,8 @@ $(document).ready(function() {
 
 function validateData(){
     return {
-        Name: encodeURI($("#new-theme__name").val()),
-        Description: encodeURI($("#new-theme__desc").val()),
+        Name: $("#new-theme__name").val(),
+        Description: $("#new-theme__desc").val(),
         Diploma: 1,
     }
 }

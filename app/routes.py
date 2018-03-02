@@ -281,9 +281,9 @@ def update_event(empl_id, id):
 
 @app.route('/empl/<int:id>/event', methods=['POST'])
 def post_event(id):
-    name = unquote(request.form.get('Name'))
-    description = unquote(request.form.get('Description'))
-    is_diploma = bool(unquote(request.form.get('Diploma')))
+    name = request.form.get('Name')
+    description = request.form.get('Description')
+    is_diploma = bool(request.form.get('Diploma'))
     employer_id = id
     print('{} {} {} {}'.format(name, description, employer_id, is_diploma))
     event = Event()
