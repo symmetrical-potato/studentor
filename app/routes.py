@@ -381,7 +381,7 @@ def reject_notification():
 
 def import_vacancies():
     vacancies = find_text.get_all_vacancies()
-    for v, i in enumerate(vacancies):
+    for i, v in enumerate(vacancies):
         print(v)
         if i > 10:
             return
