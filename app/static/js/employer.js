@@ -71,7 +71,7 @@ $(document).ready(function() {
         console.log(window.location.toString())
 
         $.ajax({
-            url: window.location,
+            url: url,
             method: "POST",
             data: data,
             success: function(resp) {
