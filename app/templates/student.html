@@ -42,21 +42,20 @@
                 
             </div>
         </div>
-        {% if diplomas: %}
+        {% if documents: %}
         <div id="diplomas" class="row">
             <div class="diploma-wrapper col-md-12">
                 <h2>Дипломы</h2>
                 <ul class="diploma-list list-group">
-                    {% for d in diplomas: %}
+                    {% for d in documents: %}
                     <li class="list-group-item">
-                        <h3>{{ d[0] }}</h3>
+                        <h3>{{ d['title'] }}</h3>
                         <div class="diploma__data non-active">
-                            <h4>Описание:</h4>
-                            <p>{{d[1]}}</p>
-                            <h4>Данные:</h4>
-                            <p>{{d[2]}}</p>
-                            <h4>Еще что-то:</h4>
-                            <p>{{d[3]}}</p>
+                            <h4>Год защиты:</h4>
+                            <p>{{d['year']}}</p>
+                            <h4>Научный руководитель</h4>
+                            <p>{{d['supervisor']}}</p>
+                            <a href="{{d['link']}}"><h4>Ссылка на диплом:</h4></a>
                         </div>
                     </li>
 
