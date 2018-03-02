@@ -74,8 +74,7 @@ $(document).ready(function() {
             url: url,
             method: "POST",
             data: data,
-            contentType: 'text/plain',
-            dataType: 'json',
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
             success: function(resp) {
 
                 let response = JSON.parse(resp);
