@@ -9,30 +9,36 @@ $(document).ready(function() {
 
         console.log("STFF")
 
-        let studentId = $(this).attr('id');
-        let parts = window.location.toString().split("/");
-        let eventId = parts[parts.length - 1];
+        let target = $(this);
 
-        console.log(studentId, eventId);
+        if (target.hasClass('btn-success')) {
+            let studentId = $(this).attr('id');
+            let parts = window.location.toString().split("/");
+            let eventId = parts[parts.length - 1];
 
-        $.ajax({
-            url: '/notification',
-            method: 'POST',
-            data: {
-                student_id: studentId,
-                event_id: eventId,
-            },
-            success: function(resp) {
-                let response = JSON.parse(resp);
-                if (response.success) {
-                    $('ok-modal').modal();
-                }
-                console.log(resp);
-            }.bind(this),
-            error: function(a, b, c) {
-                console.log(a, b, c);
-            }.bind(this),
-        })
+            console.log(studentId, eventId);
+
+            $.ajax({
+                url: '/notification',
+                method: 'POST',
+                data: {
+                    student_id: studentId,
+                    event_id: eventId,
+                },
+                success: function(resp) {
+                    let response = JSON.parse(resp);
+                    if (response.success) {
+                        target.removeClass("btn-success");
+                        target.addClass("btn-warning");
+                        target.text("Заявка отправлена");
+                    }
+                    console.log(resp);
+                }.bind(this),
+                error: function(a, b, c) {
+                    console.log(a, b, c);
+                }.bind(this),
+            })
+        }
     })
 
     $("#change-project").click(function(e) {
