@@ -118,8 +118,8 @@ $(document).ready(function() {
 
 function validateData(){
     return {
-        Name: $("#new-theme__name").val(),
-        Description: $("#new-theme__desc").val(),
+        Name: encodeURI($("#new-theme__name").val()),
+        Description: encodeURI($("#new-theme__desc").val()),
         Diploma: 1,
     }
 }
