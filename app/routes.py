@@ -372,3 +372,11 @@ def reject_notification():
     event_id = request.form.get('event_id')
     Notification.query.filter_by(student_id=student_id, event_id=event_id).delete()
     return json.dumps({'success': 'success'})
+
+
+def import_vacancies():
+    vacancies = find_text.get_all_vacancies()
+    for v, i in enumerate(vacancies):
+        print(v)
+        if i > 10:
+            return
