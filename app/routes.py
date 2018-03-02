@@ -379,3 +379,29 @@ def reject_notification():
     event_id = request.form.get('event_id')
     Notification.query.filter_by(student_id=student_id, event_id=event_id).delete()
     return json.dumps({'success': 'success'})
+
+
+def import_vacancies():
+    ids = {
+        23: 'C#',
+        22: 'финансы',
+        21: 'еда',
+        20: 'переезд',
+        19: 'java python'
+    }
+
+    for key in ids:
+        vacancies = find_text.find_event_by_string(ids[key])
+        for v in vacancies:
+            text = v['text']
+            if len(text) > 1100:
+                text = text[1:1100]
+
+            event = Event()
+            event.name = 'Стажировка'
+            event.description = text
+            event.employer_id = key
+            event.diploma = False
+            db.session.add(event)
+
+    db.session.commit()

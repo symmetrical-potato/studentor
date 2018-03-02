@@ -38,11 +38,15 @@ body {
             line-height: 2;
 
             &:hover {
-                background-color:rgba($color: grey, $alpha: 0.4);
+                background-color:rgba($color: #bbbbbb, $alpha: 0.4);
             }
 
             .diploma__data {
                 display: none;
+
+                .hide__stuff {
+                    color: grey;
+                }
             }
         }
     }

@@ -169,4 +169,22 @@ def add_to_index(content):
         es.index(index='events',  doc_type='internship', id=content['id'], body=content)
     except Exception as e:
         print(e)
-         
+
+
+def get_all_vacancies():
+    doc = {
+        'size': 10000,
+        'query': {
+            'match_all': {}
+        }
+    }
+    cur = es.search(index='events', doc_type='internship', body=doc)
+
+    res = []
+
+    for hit in cur['hits']['hits']:
+        res.append({'id': int(hit['_id']),
+                    'text': hit['_source']['text']
+                    })
+
+    return res
