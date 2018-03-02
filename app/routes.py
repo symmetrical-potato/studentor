@@ -223,6 +223,7 @@ def test_empl_theme():
 @app.route('/empl/<int:empl_id>/event/<int:id>', methods=['GET'])
 def get_event(empl_id, id):
     event = Event.query.filter_by(id=id).first()
+    employee = Employer.query.filter_by(id=empl_id).first()
     if event is None:
         return json.dumps({'error': 'Такого события не существует.'})
 
@@ -251,6 +252,7 @@ def get_event(empl_id, id):
         is_owner = False
 
     return render_template('theme.html', name=event.name, description=event.description,
+                    company_name=employee.name, company_id=empl_id,
                     diploma=event.diploma,
                     event_students=event_students,recommended_students=recommended_students,
                            is_owner=is_owner)
@@ -268,6 +270,7 @@ def update_event(empl_id, id):
     event = Event.query.filter_by(id=id).first()
     event.name = name
     event.description = description
+    
     db.session.commit()
 
     return json.dumps({'success':id})
