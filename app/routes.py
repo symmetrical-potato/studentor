@@ -10,8 +10,6 @@ from text import find_text
 from urllib.parse import unquote
 
 
-
-
 @app.route('/')
 @app.route('/index')
 def index():
@@ -40,7 +38,6 @@ def student_profile(id):
 
         invites = [(item[0].name, item[0].id, item[1].name, item[1].id) for item in zip(events,
                                                                                         employers)]
-
 
         return render_template('student.html', name=user.name,
                                contacts=user.contacts,
@@ -231,14 +228,15 @@ def get_event(empl_id, id):
         return json.dumps({'error': 'Такого события не существует.'})
 
     event_students = [
-            ("Name 1", 1),
-            ("Name 2", 2),
-        ]
+        ("Name 1", 1),
+        ("Name 2", 2),
+    ]
     print(event.description.encode().decode('utf-8'))
     query = '{} {}'.format(str(event.name), str(event.description))
     print(query)
     res = find_text.find_students_by_theme(query)
     print(res)
+
     def enrich_response(record):
         student_id = record['id']
         student = Student.query.filter_by(id=student_id).first()
@@ -258,9 +256,9 @@ def get_event(empl_id, id):
         is_owner = False
 
     return render_template('theme.html', name=event.name, description=event.description,
-                    company_name=employee.name, company_id=empl_id,
-                    diploma=event.diploma,
-                    event_students=event_students,recommended_students=recommended_students,
+                           company_name=employee.name, company_id=empl_id,
+                           diploma=event.diploma,
+                           event_students=event_students, recommended_students=recommended_students,
                            is_owner=is_owner)
 
 
@@ -276,10 +274,10 @@ def update_event(empl_id, id):
     event = Event.query.filter_by(id=id).first()
     event.name = name
     event.description = description
-    
+
     db.session.commit()
 
-    return json.dumps({'success':id})
+    return json.dumps({'success': id})
 
 
 @app.route('/empl/<int:id>/event', methods=['POST'])
@@ -298,8 +296,8 @@ def post_event(id):
     db.session.add(event)
     db.session.commit()
 
-    find_text.add_to_index({"text":event.name+" "+event.description, "date":datetime.utcnow(),
-                            "id":event.id})
+    find_text.add_to_index({"text": event.name + " " + event.description, "date": datetime.utcnow(),
+                            "id": event.id})
 
     print('{} {} {} {}'.format(event.name, event.description, event.diploma, event.employer_id))
     return json.dumps({'success': event.id})
@@ -311,18 +309,19 @@ def logout():
     return redirect(url_for("index"))
 
 
-
 @app.route('/search', methods=['GET'])
 def search():
     return render_template('search.html')
 
+
 @app.route('/search/api', methods=['GET'])
 def search_api__():
-    query = request.args.get('q')
+    query = request.args.get('q').lower()
 
     events = Event.query.all()
 
-    filtered_events = filter(lambda event: query in event.name or query in event.description, events)
+    filtered_events = filter(
+        lambda event: query in event.name.lower() or query in event.description.lower(), events)
 
     print(filtered_events)
 
@@ -343,7 +342,7 @@ def search_api__():
 
 @app.route('/search_students_by_theme/api', methods=['GET'])
 def search_api():
-    query = request.args.get('q')
+    query = request.args.get('q').lower()
     res = find_text.find_students_by_theme(query)
 
     def enrich_response(record):
@@ -356,6 +355,7 @@ def search_api():
         return student.name, student.id, record['score']
 
     return json.dumps(list(map(enrich_response, res)))
+
 
 @app.route('/notification', methods=["POST"])
 def send_notification():
