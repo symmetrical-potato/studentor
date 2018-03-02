@@ -16,6 +16,9 @@
                 <a class="navbar-brand" href="/">
                     Studentor
                 </a>
+                <a class="navbar-brand" href="/search">
+                    Поиск вакансий и стажировок
+                </a>
             </div>
             <form class="form-inline my-2 my-lg-0" action="/logout" method="POST">
                 <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Logout</button>
@@ -42,6 +45,7 @@
                 
             </div>
         </div>
+        <a href="/search">Поиск вакансий и стажировок</a>
         {% if is_owner and invites: %}
         <div id="notifications">
             <ul class="list-group" id="notifications-list">
