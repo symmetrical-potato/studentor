@@ -105,7 +105,7 @@ def find_students_by_theme(theme_name):
     }
     res = []
     
-    cur = es.search(index='uni', doc_type='diplomaf', body=quer)
+    cur = es.search(index='uni', doc_type='diploma', body=quer)
     for hit in cur['hits']['hits']:
         res.append({'id'    : int(hit['_id']),
                    'score'  : hit['_score'],
