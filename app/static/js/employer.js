@@ -25,7 +25,7 @@ $(document).ready(function() {
             method: 'UPDATE',
             data: data,
             success: function() {
-                $("#comp_name").text(data.Name);
+                $("#comp_name").text(data.Username);
                 $("#comp_cont").text(data.Contacts);
                 $("#comp_desc").text(data.Description);
                 $('#settings-modal').modal('hide');
