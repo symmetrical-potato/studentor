@@ -27,7 +27,11 @@ $(document).ready(function() {
                 },
                 success: function(resp) {
                     let response = JSON.parse(resp);
+                    console.log('>>', response);
                     if (response.success) {
+
+                        console.log(target);
+
                         target.removeClass("btn-success");
                         target.addClass("btn-warning");
                         target.text("Заявка отправлена");
