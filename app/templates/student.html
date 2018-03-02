@@ -45,9 +45,9 @@
         {% if is_owner and notifications: %}
         <div id="notifications">
             <ul class="list-group" id="notifications-list">
-                {% for n in notifications: %}
+                {% for n in invites: %}
                     <li class="list-group-item">
-                        Компания <a href="/empl/{{n['company_id']}}">{{n['company_name']}} </a> пригласила вас для участия в проекте <a href="/empl/{{n['company_id']}}/event/{{n['event_id']}}">{{n['event_name']}}</a>
+                        Компания <a href="/empl/{{n[3]}}">{{n[2]}} </a> пригласила вас для участия в проекте <a href="/empl/{{n[3]}}/event/{{n[1]}}">{{n[0]}}</a>
                     </li>
                 {% endfor %}
             </ul>

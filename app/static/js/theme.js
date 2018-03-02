@@ -4,6 +4,37 @@ $(document).ready(function() {
         cur_mode: 'settings',
     }
 
+    $('.invite').click(function(e) {
+        e.preventDefault();
+
+        console.log("STFF")
+
+        let studentId = $(this).attr('id');
+        let parts = window.location.toString().split("/");
+        let eventId = parts[parts.length - 1];
+
+        console.log(studentId, eventId);
+
+        $.ajax({
+            url: '/notifications',
+            method: 'POST',
+            data: {
+                student_id: studentId,
+                event_id: eventId,
+            },
+            success: function(resp) {
+                let response = JSON.parse(resp);
+                if (response.success) {
+                    $('ok-modal').modal();
+                }
+                console.log(resp);
+            }.bind(this),
+            error: function(a, b, c) {
+                console.log(a, b, c);
+            }.bint(this),
+        })
+    })
+
     $("#change-project").click(function(e) {
         
         let mode = $('.material-icons').text();
