@@ -28,9 +28,11 @@ def student_profile(id):
         else:
             is_owner = False
 
+        documents = Document.query.filter_by(student_id=id)
+
         return render_template('student.html', name=user.name,
                                contacts=user.contacts,
-                               cv=user.cv_hash, is_owner=is_owner)
+                               cv=user.cv_hash, is_owner=is_owner, documents=documents)
     else:
         pass
 
