@@ -6,6 +6,8 @@ from database.Models import *
 from flask_login import login_user, logout_user, current_user, login_required
 from sqlalchemy import update
 from text import find_text
+from urllib.parse import unquote
+
 
 
 
@@ -279,9 +281,9 @@ def update_event(empl_id, id):
 
 @app.route('/empl/<int:id>/event', methods=['POST'])
 def post_event(id):
-    name = request.form.get('Name')
-    description = request.form.get('Description')
-    is_diploma = bool(request.form.get('Diploma'))
+    name = unquote(request.form.get('Name'))
+    description = unquote(request.form.get('Description'))
+    is_diploma = bool(unquote(request.form.get('Diploma')))
     employer_id = id
     print('{} {} {} {}'.format(name, description, employer_id, is_diploma))
     event = Event()
