@@ -30,9 +30,19 @@ def student_profile(id):
 
         documents = Document.query.filter_by(student_id=id)
 
+        notifications = Notification.query.filter_by(student_id=id).all()
+        events = [Event.query.filter_by(id=item.event_id).first() for item in notifications]
+        employers = [Employer.query.filter_by(id=event.employer_id).first() for event in
+                     events]
+
+        invites = [(item[0].name, item[0].id, item[1].name, item[1].id) for item in zip(events,
+                                                                                        employers)]
+
+
         return render_template('student.html', name=user.name,
                                contacts=user.contacts,
-                               cv=user.cv_hash, is_owner=is_owner, documents=documents)
+                               cv=user.cv_hash, is_owner=is_owner, documents=documents,
+                               invites=invites)
     else:
         pass
 
