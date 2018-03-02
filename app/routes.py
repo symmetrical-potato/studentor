@@ -309,6 +309,22 @@ def search_api():
     return json.dumps(list(map(enrich_response, res)))
 
 
+@app.route('/search_students_by_theme/api', methods=['GET'])
+def search_api():
+    query = request.args.get('q')
+    res = find_text.find_students_by_theme(query)
+
+    def enrich_response(record):
+        student_id = record['id']
+        student = Student.query.filter_by(id=student_id).first()
+
+        if student is None:
+            return {}
+
+        return student.name, student.id, record['score']
+
+    return json.dumps(list(map(enrich_response, res)))
+
 @app.route('/notification', methods=["POST"])
 def send_notification():
     student_id = request.form.get('student_id')
