@@ -350,11 +350,19 @@ def search_api():
 def send_notification():
     student_id = request.form.get('student_id')
     event_id = request.form.get('event_id')
+    Notification.query.filter_by(student_id=student_id, event_id=event_id).delete()
     notification = Notification(student_id=student_id,
                                 event_id=event_id,
                                 checked=False)
     db.session.add(notification)
     db.session.commit()
 
-    return ''
+    return json.dumps({'success': 'success'})
 
+
+@app.route('/reject_notification', methods=['POST'])
+def reject_notification():
+    student_id = request.form.get('student_id')
+    event_id = request.form.get('event_id')
+    Notification.query.filter_by(student_id=student_id, event_id=event_id).delete()
+    return json.dumps({'success': 'success'})
