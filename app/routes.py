@@ -291,9 +291,9 @@ def search_api():
 
     def enrich_response(record):
         event_id = record['id']
-        event_record = Event.query.find_by(id=id).first()
+        event_record = Event.query.filter_by(id=id).first()
         company_id = event_record.company_id
-        company_name = Employer.query.find_by(id=company_id).name
+        company_name = Employer.query.filter_by(id=company_id).first().name
         return {
             'id': record['id'],
             'score': record['score'],
