@@ -14,11 +14,11 @@ body {
   justify-content: flex-start;
   align-items: center; }
   #wrapper #bio {
-    min-width: 50%; }
+    width: 50%; }
     #wrapper #bio .image img {
       border-radius: 100%; }
   #wrapper #diplomas {
-    min-width: 50%; }
+    width: 50%; }
     #wrapper #diplomas .list-group-item {
       line-height: 2; }
       #wrapper #diplomas .list-group-item:hover {
