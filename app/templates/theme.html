@@ -75,7 +75,7 @@
                             <td><a href="/stud/{{stud[1]}}">{{stud[1]}}</a></td>
                             <td>{{stud[2]}}</td>
                             <td>
-                                {% if stud[3]: %}
+                                {% if not stud[3]: %}
                                     <button id="{{stud[1]}}" class="btn btn-success invite">Отправить</button>
                                 {% else: %}
                                     <button id="{{stud[1]}}" class="btn btn-warning invite">Заявка отправлена</button>
