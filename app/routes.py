@@ -287,6 +287,8 @@ def search_api():
     query = request.args.get('q')
     res = find_text.find_by_string(query)
 
+    print(res)
+
     def enrich_response(record):
         event_id = record['id']
         event_record = Event.query.find_by(id=id).first()
