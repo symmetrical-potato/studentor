@@ -74,14 +74,11 @@ $(document).ready(function() {
             url: url,
             method: "POST",
             data: data,
+            contentType: 'text/plain',
+            dataType: 'json',
             success: function(resp) {
 
                 let response = JSON.parse(resp);
-
-                // console.log(response);
-
-                // console.log(resp);
-                // console.log(response.success);
 
                 if (response.success) {
                     let id = response.success;
@@ -115,7 +112,7 @@ $(document).ready(function() {
             }.bind(this),
             error: function(resp) {
                 console.log("ERR", resp);
-            }
+            }.bind(this),
         })
     })
 });
