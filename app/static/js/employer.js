@@ -15,7 +15,7 @@ $(document).ready(function() {
         e.preventDefault();
 
         let data = {
-            Name: $("#settings-modal__name").val(),
+            Username: $("#settings-modal__name").val(),
             Contacts: $("#settings-modal__cont").val(),
             Description: $("#settings-modal__desc").val(),
         }
