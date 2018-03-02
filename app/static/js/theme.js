@@ -31,7 +31,7 @@ $(document).ready(function() {
             }.bind(this),
             error: function(a, b, c) {
                 console.log(a, b, c);
-            }.bint(this),
+            }.bind(this),
         })
     })
 
