@@ -96,7 +96,7 @@ function reloadResults(data) {
                 <h2>${element.name} | <a href="/empl/${element.company_id}">${element.company_name}</a></h2>
                 <a href="/empl/${element.company_id}/event/${element.id}">Ссылка на проект</a>
                 <div class="project-data">
-                    <p>${element.description}</p>
+                    <p>${element.description.substring(0, 150)} ...</p>
                 </div>
             </div>
             <div class="wrapper">
