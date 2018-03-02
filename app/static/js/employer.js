@@ -74,7 +74,6 @@ $(document).ready(function() {
             url: url,
             method: "POST",
             data: data,
-            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
             success: function(resp) {
 
                 let response = JSON.parse(resp);
@@ -121,7 +120,7 @@ function validateData(){
     return {
         Name: $("#new-theme__name").val(),
         Description: $("#new-theme__desc").val(),
-        Diploma: $("#radio__diploma").prop('checked') ? 1 : 0,
+        Diploma: 1,
     }
 }
 
