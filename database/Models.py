@@ -41,7 +41,7 @@ class Employer(UserMixin, User, db.Model):
 class Event(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column('name', db.String(255))
-    description = db.Column('description', db.String(15000))
+    description = db.Column('description', db.String(1500))
     diploma = db.Column('diploma', db.Boolean)
     employer_id = db.Column('employer_id', db.Integer, db.ForeignKey('employer.id'))
 

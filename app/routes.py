@@ -391,9 +391,13 @@ def import_vacancies():
     for key in ids:
         vacancies = find_text.find_event_by_string(ids[key])
         for v in vacancies:
+            text = v['text']
+            if len(text) > 1100:
+                text = text[1:1100]
+
             event = Event()
             event.name = 'Стажировка'
-            event.description = v['text']
+            event.description = text
             event.employer_id = key
             event.diploma = False
             db.session.add(event)
