@@ -17,6 +17,8 @@ body {
     width: 50%; }
     #wrapper #bio .image img {
       border-radius: 100%; }
+  #wrapper #notifications {
+    width: 50%; }
   #wrapper #diplomas {
     width: 50%; }
     #wrapper #diplomas .list-group-item {
