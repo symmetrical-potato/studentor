@@ -114,7 +114,7 @@ def stud_signup():
         db.session.commit()
 
         login_user(user)
-        return json.dumps({'success': 'test'})
+        return json.dumps({'success': user.id})
 
 
 @app.route('/empl/login', methods=['GET', 'POST'])
