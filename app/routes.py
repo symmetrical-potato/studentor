@@ -231,7 +231,7 @@ def get_event(empl_id, id):
             ("Name 1", 1),
             ("Name 2", 2),
         ]
-
+    print(event.description.encode().decode('utf-8'))
     query = '{} {}'.format(str(event.name), str(event.description))
     print(query)
     res = find_text.find_students_by_theme(query)
