@@ -220,11 +220,20 @@ def get_event(empl_id, id):
             ("Name 1", 1),
             ("Name 2", 2),
         ]
-    recommended_students = [
-            ("Name Lastname", 3, 4.2),
-            ("Another Nameless", 4, 4.9),
-            ("Some RandomGuy", 5, 1)
-        ]
+
+    query = event.name + " " + event.description
+    res = find_text.find_students_by_theme(query)
+
+    def enrich_response(record):
+        student_id = record['id']
+        student = Student.query.filter_by(id=student_id).first()
+
+        if student is None:
+            return {}
+
+        return student.name, student.id, record['score']
+
+    recommended_students = list(map(enrich_response, res))
 
     if current_user.id == empl_id:
         is_owner = True
@@ -311,7 +320,7 @@ def search_api():
     return json.dumps(list(map(enrich_response, res)))
 
 
-@app.route('/search_students_by_theme/api', methods=['GET'])
+@app.route('/search_students_by_event/api', methods=['GET'])
 def search_api():
     query = request.args.get('q')
     res = find_text.find_students_by_theme(query)
