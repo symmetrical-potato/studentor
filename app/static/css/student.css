@@ -24,9 +24,11 @@ body {
     #wrapper #diplomas .list-group-item {
       line-height: 2; }
       #wrapper #diplomas .list-group-item:hover {
-        background-color: rgba(128, 128, 128, 0.4); }
+        background-color: rgba(187, 187, 187, 0.4); }
       #wrapper #diplomas .list-group-item .diploma__data {
         display: none; }
+        #wrapper #diplomas .list-group-item .diploma__data .hide__stuff {
+          color: grey; }
 
 footer {
   height: 20px; }
