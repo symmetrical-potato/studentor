@@ -67,7 +67,7 @@ $(document).ready(function() {
         let data = validateData();
 
         $.ajax({
-            url: window.location + "/event",
+            url: window.location.toString() + "/event",
             method: "POST",
             data: data,
             success: function(resp) {
