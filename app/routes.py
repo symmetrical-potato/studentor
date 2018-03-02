@@ -283,7 +283,7 @@ def post_event(id):
     description = request.form.get('Description')
     is_diploma = bool(request.form.get('Diploma'))
     employer_id = id
-
+    print('{} {} {} {}'.format(name, description, employer_id, is_diploma))
     event = Event()
     event.name = name
     event.description = description
@@ -292,7 +292,7 @@ def post_event(id):
 
     db.session.add(event)
     db.session.commit()
-
+    print('{} {} {} {}'.format(event.name, event.description, event.diploma, event.employer_id))
     return json.dumps({'success': event.id})
 
 
