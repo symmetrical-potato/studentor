@@ -25,9 +25,13 @@
     </nav>
     <div id="wrapper">
         <div id="project__description">
-            <h1><span class="changeable" id="h1">{{name}}</span> <a href="#" id="change-project">
+            <h1><span class="changeable" id="h1">{{name}}</span>
+                 {% if is_owner: %}
+                 <a href="#" id="change-project">
                     <i class="material-icons">settings</i>
-                </a></i></h1>
+                </a>
+                {% endif %}
+            </i></h1>
             <input type="text" class="h1-changeable-input" value="Project name">
             <h2><span>Описание проекта</span></h2>
             <p class="changeable" id="p">{{description}}</p>
