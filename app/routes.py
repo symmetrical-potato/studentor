@@ -243,10 +243,12 @@ def get_event(empl_id, id):
         student_id = record['id']
         student = Student.query.filter_by(id=student_id).first()
 
+        event = Notification.query.filter_by(student_id=student_id, event_id=id).first()
+
         if student is None:
             return {}
 
-        return student.name, student.id, record['score']
+        return student.name, student.id, record['score'], False if event is None else True
 
     recommended_students = list(map(enrich_response, res))
 
@@ -380,8 +382,26 @@ def reject_notification():
 
 
 def import_vacancies():
-    vacancies = find_text.get_all_vacancies()
-    for i, v in enumerate(vacancies):
-        print(v)
-        if i > 10:
-            return
+    ids = {
+        23: 'C#',
+        22: 'финансы',
+        21: 'еда',
+        20: 'переезд',
+        19: 'java python'
+    }
+
+    for key in ids:
+        vacancies = find_text.find_event_by_string(ids[key])
+        for v in vacancies:
+            text = v['text']
+            if len(text) > 1100:
+                text = text[1:1100]
+
+            event = Event()
+            event.name = 'Стажировка'
+            event.description = text
+            event.employer_id = key
+            event.diploma = False
+            db.session.add(event)
+
+    db.session.commit()
