@@ -243,10 +243,12 @@ def get_event(empl_id, id):
         student_id = record['id']
         student = Student.query.filter_by(id=student_id).first()
 
+        event = Notification.query.filter_by(student_id=student_id, event_id=id).first()
+
         if student is None:
             return {}
 
-        return student.name, student.id, record['score']
+        return student.name, student.id, record['score'], False if event is None else True
 
     recommended_students = list(map(enrich_response, res))
 
