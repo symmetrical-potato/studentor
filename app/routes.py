@@ -312,7 +312,7 @@ def search_api():
 
 
 @app.route('/search_students_by_theme/api', methods=['GET'])
-def search_api():
+def search_api___():
     query = request.args.get('q')
     res = find_text.find_students_by_theme(query)
 
