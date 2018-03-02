@@ -302,7 +302,7 @@ def search_api():
             'description': event_record.description
         }
 
-    return json.dumps(map(enrich_response, res))
+    return json.dumps(list(map(enrich_response, res)))
 
 
 @app.route('/notification', methods=["POST"])
