@@ -151,3 +151,22 @@ def find_event_by_string(string):
                    'date'   : hit['_source']['date']})
         
     return res
+
+def add_to_index(content):
+    """
+    Add `content` (dict object) to elasticsearch index
+    must be dict and contain folowing keys:
+    - `id`
+    - `text`
+    - `date`
+    :content (dict): 
+    """
+
+    try:
+        new_content = dict()
+        new_content['text'] = content['text']
+        new_content['date'] = content['date']
+        es.index(index='events',  doc_type='internship', id=content['id'], body=content)
+    except Exception as e:
+        print(e)
+         
