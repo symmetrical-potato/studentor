@@ -233,6 +233,7 @@ def get_event(empl_id, id):
         ]
 
     query = event.name + " " + event.description
+    print(query)
     res = find_text.find_students_by_theme(query)
     print(res)
     def enrich_response(record):
