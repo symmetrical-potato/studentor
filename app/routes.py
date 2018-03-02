@@ -320,8 +320,9 @@ def search():
 def search_api__():
     query = request.args.get('q')
     res = find_text.find_event_by_string(query)
-    
+
     print(res)
+    print([key for key in res[0]])
 
     def enrich_response(record):
         event_id = record['id']
