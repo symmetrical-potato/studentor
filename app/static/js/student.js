@@ -21,9 +21,6 @@ $(document).ready(function() {
         console.log('>>>parent', $(this).parent());
 
         let parent = $(this).parent();
-        // let data = $(parent).find('.diploma__data');
-        // console.log('>>>data', data);
         $(parent).hide(250);
-        // $(parent).css('display', 'none');
     });
 });
