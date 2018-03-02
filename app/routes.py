@@ -286,12 +286,6 @@ def search():
 def search_api():
     query = request.args.get('q')
     res = find_text.find_by_string(query)
-    #название проекта, id empl, name empl, id proj, descr proj, 1/2, rating
-
-    data = [
-        ["Project name", 1, "Company name", 11, "Description", 1, 1.4],
-        ["Another Project name", 3, "Another Super", 11, "Q", 2, 2.3]
-    ]
     return json.dumps(res)
 
 @app.route('/notification', methods=["POST"])
