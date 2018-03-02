@@ -319,8 +319,8 @@ def search():
 @app.route('/search/api', methods=['GET'])
 def search_api__():
     query = request.args.get('q')
-    res = find_text.find_by_string(query)
-
+    res = find_text.find_event_by_string(query)
+    
     print(res)
 
     def enrich_response(record):
