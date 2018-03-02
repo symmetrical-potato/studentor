@@ -319,28 +319,26 @@ def search():
 @app.route('/search/api', methods=['GET'])
 def search_api__():
     query = request.args.get('q')
-    res = find_text.find_by_string(query)
 
-    print(res)
+    events = Event.query.all()
 
-    def enrich_response(record):
-        event_id = record['id']
-        event_record = Event.query.filter_by(id=event_id).first()
-        if event_record is None:
-            return {}
-        company_id = event_record.employer_id
+    filtered_events = filter(lambda event: query in (event.name+" "+event.description), events)
+
+    print(filtered_events)
+
+    def enrich_response(event):
+        company_id = event.employer_id
         company_name = Employer.query.filter_by(id=company_id).first().name
         return {
-            'id': record['id'],
-            'score': record['score'],
+            'id': event.id,
             'company_id': company_id,
             'company_name': company_name,
-            'type': 1 if record['type'] == 'diploma' else 2,
-            'name': record['title'],
-            'description': event_record.description
+            'type': 1 if event.diploma else 2,
+            'name': event.name,
+            'description': event.description
         }
 
-    return json.dumps(list(map(enrich_response, res)))
+    return json.dumps(list(map(enrich_response, filtered_events)))
 
 
 @app.route('/search_students_by_theme/api', methods=['GET'])
