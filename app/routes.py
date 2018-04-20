@@ -323,8 +323,6 @@ def search_api__():
     filtered_events = filter(
         lambda event: query in event.name.lower() or query in event.description.lower(), events)
 
-    print(filtered_events)
-
     def enrich_response(event):
         company_id = event.employer_id
         company_name = Employer.query.filter_by(id=company_id).first().name
