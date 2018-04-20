@@ -3,19 +3,18 @@ import json
 import os
 import datetime
 
+from celery import Celery
 from database.Models import *
 from config import Config
 
-def foo():
-    event = Event()
-    event.name = "testtest"
-    event.description = "testtest"
-    event.employer_id = None
-    event.diploma = True
+celery_app = Celery()
 
-    db.session.add(event)
-    db.session.commit()
+@celery_app.on_after_configure.connect
+def setup_periodic_tasks(sender, **kwargs):
+    sender.add_periodic_task(Config.DATA_LOADER_PERIOD, load_data.s())
 
+
+@celery_app.task
 def load_data():
     try:
         result = []
@@ -84,7 +83,6 @@ def load_data():
         write_error_message(str(e))
 
 
-
 def download_data(offset):
     parameters = {"owner_id": "-165384603", "offset":offset, "access_token": Config.VK_API_KEY, \
                                                                       "v": "5.74"}
@@ -95,6 +93,7 @@ def download_data(offset):
 
     return data
 
+
 def get_last_loaded_data_id():
     cache_file = Config.PATH_TO_DATA_LOADER_CACHE
     if not os.path.isfile(cache_file):
@@ -104,9 +103,11 @@ def get_last_loaded_data_id():
 
     return last_loaded_data_id
 
+
 def save_last_loaded_data_id(id):
     cache_file = Config.PATH_TO_DATA_LOADER_CACHE
     open(cache_file, "w").write(str(id))
+
 
 def write_error_message(message):
     now = datetime.datetime.now()
@@ -117,6 +118,7 @@ def write_error_message(message):
     log_file = Config.PATH_TO_DATA_LOADER_LOG
     open(log_file, "a").write(record)
 
+
 def write_ok_message(n_events):
     now = datetime.datetime.now()
     date_str = now.strftime("%H:%M:%S %Y/%m/%d")
@@ -126,6 +128,3 @@ def write_ok_message(n_events):
 
     log_file = Config.PATH_TO_DATA_LOADER_LOG
     open(log_file, "a").write(record)
-
-if __name__ == "__main__":
-    load_data()
