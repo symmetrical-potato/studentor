@@ -37,8 +37,7 @@
 1. Создать переменную окружения `VK_API_KEY`, которая должна содержать сервисный ключ доступа для api
 vkontakte.
 2. Изменить период запуска задачи в файле config.py, если требуется.
-3. Запустить rabbitmq (`sudo rabbitmq-server`), подробнее [тут](http://docs.celeryproject
-.org/en/latest/getting-started/brokers/rabbitmq.html#broker-rabbitmq)
+3. Запустить rabbitmq (`sudo rabbitmq-server`), подробнее [тут](http://docs.celeryproject.org/en/latest/getting-started/brokers/rabbitmq.html#broker-rabbitmq)
 4. Запустить задачу командой `celery -A data_loader.data_loader_task worker -B` из директории
 проекта
 
