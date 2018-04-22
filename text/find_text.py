@@ -1,7 +1,7 @@
 import elasticsearch as esearch
 import pandas as pd
 
-es = esearch.Elasticsearch()
+es = esearch.Elasticsearch(hosts=['127.0.0.1'])
 
 
 def find_by_string(string):
@@ -19,27 +19,27 @@ def find_by_string(string):
         }, ...
     ]
     '''
-    quer = { 
-        'query':  
-        {
-            'match' : 
+    quer = {
+        'query':
             {
-                'text' : string,
+                'match':
+                    {
+                        'text': string,
+                    }
             }
-        }
     }
     res = []
-    
+
     cur = es.search(index='uni', doc_type='diploma', body=quer)
     for hit in cur['hits']['hits']:
-        res.append({'id'    : int(hit['_id']),
-                   'score'  : hit['_score'],
-                   'title'  : hit['_source']['title'],
-                   'link'   : hit['_source']['link'],
-                   'type'   : 'diploma'})
-        
+        res.append({'id': int(hit['_id']),
+                    'score': hit['_score'],
+                    'title': hit['_source']['title'],
+                    'link': hit['_source']['link'],
+                    'type': 'diploma'})
+
     # TODO: Сделать поиск по вакансиям
-        
+
     return res
 
 
@@ -58,25 +58,24 @@ def find_by_supervisor(supervisor):
     '''
     st_names = pd.read_csv('st_names.csv')
     quer = {
-        'size' : 30,
+        'size': 30,
         'query':
             {
-                'match' : 
-             {
-                 'supervisor' : supervisor,
-             }
+                'match':
+                    {
+                        'supervisor': supervisor,
+                    }
             }
     }
-    
+
     res = []
-    
+
     cur = es.search(index='uni', doc_type='diploma', body=quer)
     for hit in cur['hits']['hits']:
-        res.append({'student_id'    : int(hit['_id']),
-                    'student_name'  : st_names.name[int(hit['_id'])],
-                    'theme_name'    : hit['_source']['title']})
-        
-        
+        res.append({'student_id': int(hit['_id']),
+                    'student_name': st_names.name[int(hit['_id'])],
+                    'theme_name': hit['_source']['title']})
+
     return res
 
 
@@ -93,27 +92,37 @@ def find_students_by_theme(theme_name):
                 }, ...
             ]
     '''
-    
-    quer = { 
-        'query':  
+
+    quer = {
+        'query':
         {
-            'match' : 
+            'match' :
             {
                 'text' : theme_name,
             }
         }
     }
+    # quer = {
+    #     'size': 10000,
+    #     'query':
+    #         {
+    #             'match_all':
+    #                 {
+    #
+    #                 },
+    #
+    #         }
+    # }
     res = []
-    
+
     cur = es.search(index='uni', doc_type='diploma', body=quer)
     for hit in cur['hits']['hits']:
-        res.append({'id'    : int(hit['_id']),
-                   'score'  : hit['_score'],
-                   'title'  : hit['_source']['title'],
-                   'link'   : hit['_source']['link'],
-                   'type'   : 'diploma'})
-        
-        
+        res.append({'id': int(hit['_id']),
+                    'score': hit['_score'],
+                    'title': hit['_source']['title'],
+                    'link': hit['_source']['link'],
+                    'type': 'diploma'})
+
     return res
 
 
@@ -132,27 +141,28 @@ def find_event_by_string(string):
         }, ...
     ]
     '''
-    quer = { 
-        'query':  
-        {
-            'match' : 
+    quer = {
+        'query':
             {
-                'text' : string,
+                'match':
+                    {
+                        'text': string,
+                    }
             }
-        }
     }
     res = []
-    
+
     cur = es.search(index='events', doc_type='internship', body=quer)
     for hit in cur['hits']['hits']:
-        res.append({'id'    : int(hit['_id']),
-                   'score'  : hit['_score'],
-                   'text'   : hit['_source']['text'],
-                   'date'   : hit['_source']['date']})
-        
+        res.append({'id': int(hit['_id']),
+                    'score': hit['_score'],
+                    'text': hit['_source']['text'],
+                    'date': hit['_source']['date']})
+
     return res
 
-def add_to_index(content):
+
+def add_event_to_index(content):
     """
     Add `content` (dict object) to elasticsearch index
     must be dict and contain folowing keys:
@@ -166,9 +176,21 @@ def add_to_index(content):
         new_content = dict()
         new_content['text'] = content['text']
         new_content['date'] = content['date']
-        es.index(index='events',  doc_type='internship', id=content['id'], body=content)
+        es.index(index='events', doc_type='internship', id=content['id'], body=content)
     except Exception as e:
         print(e)
+
+
+def put_diploma_to_index(diploma):
+    try:
+        id = diploma['id']
+        es.index(index='uni', doc_type='diploma', id=id, body=diploma, request_timeout=30)
+    except Exception as e:
+        print(e)
+
+
+def patch_diploma_in_index(diploma):
+    pass
 
 
 def get_all_vacancies():
@@ -188,3 +210,21 @@ def get_all_vacancies():
                     })
 
     return res
+
+
+{"uni": {"aliases": {},
+         "mappings": {"diploma": {
+             "properties": {"link": {"type": "text", "fields": {"keyword": {"type": "keyword", "ignore_above": 256}}},
+                            "speciality": {"type": "text",
+                                           "fields": {"keyword": {"type": "keyword", "ignore_above": 256}}},
+                            "supervisor": {"type": "text",
+                                           "fields": {"keyword": {"type": "keyword", "ignore_above": 256}}},
+                            "text": {"type": "text", "fields": {"keyword": {"type": "keyword", "ignore_above": 256}}},
+                            "title": {"type": "text", "fields": {"keyword": {"type": "keyword", "ignore_above": 256}}},
+                            "type": {"type": "text", "fields": {"keyword": {"type": "keyword", "ignore_above": 256}}},
+                            "university": {"type": "text",
+                                           "fields": {"keyword": {"type": "keyword", "ignore_above": 256}}},
+                            "year": {"type": "long"}}}},
+         "settings": {
+             "index": {"creation_date": "1521973267912", "number_of_shards": "5", "number_of_replicas": "1",
+                       "uuid": "VTzqXhJbS0SATdDEvyqn7A", "version": {"created": "6020399"}, "provided_name": "uni"}}}}

@@ -17,6 +17,8 @@ class Config(object):
     
     PATH_TO_DATA_LOADER_CACHE = os.path.join(PATH_TO_CACHE_DIR, "data_loader_cache.txt")
     PATH_TO_DATA_LOADER_LOG = os.path.join(PATH_TO_LOG_DIR, "data_loader_log.txt")
+    UPLOAD_FOLDER = '/home/merlin/.cache/studentor/diplomas/'
+    os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 if not os.path.isdir(Config.PATH_TO_CACHE_DIR):
     os.mkdir(Config.PATH_TO_CACHE_DIR)

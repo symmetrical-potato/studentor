@@ -5,91 +5,101 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Profile</title>
-    <link rel="stylesheet" type="text/css" media="screen" href="{{ url_for('static', filename='css/student.css')}}" />
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ url_for('static', filename='css/student.css') }}"/>
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
-    <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="/">
-                    Studentor
-                </a>
-                <a class="navbar-brand" href="/search">
-                    Поиск вакансий и стажировок
-                </a>
-            </div>
-            <form class="form-inline my-2 my-lg-0" action="/logout" method="POST">
-                <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Logout</button>
-            </form>
-        
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/">
+                Studentor
+            </a>
+            <a class="navbar-brand" href="/search">
+                Поиск вакансий и стажировок
+            </a>
         </div>
-    </nav>
+        <form class="form-inline my-2 my-lg-0" action="/logout" method="POST">
+            <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Logout</button>
+        </form>
 
-    <div id="wrapper">
-        <div id="bio" class="row">
-            <div class="image col-md-4">
-                <img src="https://i.pinimg.com/170x/f0/03/44/f00344d904062ce92b4b3b146060d874--profile-pics-bucket-lists.jpg">
-            </div>
-            <div class="profile-description col-md-8">
-                <h1>{{ name }}
-                    {% if is_owner: %}
+    </div>
+</nav>
+
+<div id="wrapper">
+    <div id="bio" class="row">
+        <div class="image col-md-4">
+            <img src="https://i.pinimg.com/170x/f0/03/44/f00344d904062ce92b4b3b146060d874--profile-pics-bucket-lists.jpg">
+        </div>
+        <div class="profile-description col-md-8">
+            <h1>{{ name }}
+                {% if is_owner: %}
                     <a href="#">
                         <i class="material-icons">settings</i>
                     </a>
-                    {% endif %}
-                    
-                </h1>
-                <p>{{contacts}} | <a href="{{cv}}">CV</a></p> 
-                
-            </div>
+                {% endif %}
+            </h1>
+            <p> {{ contacts }} | <a href="{{ cv }}">CV</a></p>
+
         </div>
-        <a href="/search">Поиск вакансий и стажировок</a>
-        {% if is_owner and invites: %}
+    </div>
+    <a href="/search">Поиск вакансий и стажировок</a>
+    {% if is_owner and invites: %}
         <div id="notifications">
             <ul class="list-group" id="notifications-list">
                 {% for n in invites: %}
                     <li class="list-group-item">
-                        Компания <a href="/empl/{{n[3]}}">{{n[2]}} </a> пригласила вас для участия в проекте <a href="/empl/{{n[3]}}/event/{{n[1]}}">{{n[0]}}</a>
+                        Компания <a href="/empl/{{ n[3] }}">{{ n[2] }} </a> пригласила вас для участия в проекте <a
+                            href="/empl/{{ n[3] }}/event/{{ n[1] }}">{{ n[0] }}</a>
                     </li>
                 {% endfor %}
             </ul>
         </div>
-        {% endif %}
-        {% if documents: %}
+    {% endif %}
+    {% if documents: %}
         <div id="diplomas" class="row">
             <div class="diploma-wrapper col-md-12">
-                <h2>Дипломы</h2>
+                <h2>Дипломы
+                    <div class="image-upload" style="float: right;">
+                        <label for="upload_diploma" title="Загрузить диплом">
+                            <img style="width: 30px; height: 30px" src="../static/pictures/add.png"/>
+                        </label>
+
+                        <input id="upload_diploma" data-id="{{ id }}" type="file"/>
+                    </div>
+                </h2>
                 <ul class="diploma-list list-group">
                     {% for d in documents: %}
-                    <li class="list-group-item">
-                        <h3>{{ d['title'] }}</h3>
-                        <div class="diploma__data non-active">
-                            <h4>Год защиты:</h4>
-                            <p>{{d['year']}}</p>
-                            <h4>Научный руководитель</h4>
-                            <p>{{d['supervisor']}}</p>
-                            <a href="{{d['link']}}"><h4>Ссылка на диплом:</h4></a>
-                            <a href="javascript:;" class="hide__stuff">Скрыть</a>
-                        </div>
-                    </li>
+                        <li class="list-group-item" data-id="{{ d['id'] }}">
+                            <h3>{{ d['title'] }}</h3>
+                            <div class="diploma__data non-active">
+                                <h4>Год защиты:</h4>
+                                <p>{{ d['year'] }}</p>
+                                <h4>Научный руководитель</h4>
+                                <p>{{ d['supervisor'] }}</p>
+                                <a href="{{ d['link'] }}"><h4>Ссылка на диплом</h4></a>
+                                <a href="javascript:;" class="hide__stuff">Скрыть</a>
+                                <a href="javascript:;" class="remove__stuff" style="color: red; float: right;"
+                                   data-id="{{ d['id'] }}">Удалить</a>
+                            </div>
+                        </li>
 
                     {% endfor %}
-                </ul> 
+                </ul>
             </div>
         </div>
-        {% endif %}
-    </div>
+    {% endif %}
+</div>
 
-    <footer>
-        
-    </footer>
+<footer>
 
-    <script
-			  src="https://code.jquery.com/jquery-3.3.1.min.js"
-			  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-			  crossorigin="anonymous"></script>
-    <script src="{{url_for('static', filename='js/student.js')}}"></script>
+</footer>
+
+<script
+        src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+<script src="{{ url_for('static', filename='js/student.js') }}"></script>
 </body>
 </html>

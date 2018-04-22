@@ -1,13 +1,18 @@
 import json
-
+from copy import deepcopy
 from datetime import datetime
-from flask import render_template, redirect, url_for, flash, request, abort, make_response
+from flask import render_template, redirect, url_for, flash, request, abort, make_response, send_file
 from app import app
 from database.Models import *
 from flask_login import login_user, logout_user, current_user, login_required
 from sqlalchemy import update
 from text import find_text
 from urllib.parse import unquote
+from werkzeug.utils import secure_filename
+import os
+import hashlib
+import docx
+import textract
 
 
 @app.route('/')
@@ -39,7 +44,7 @@ def student_profile(id):
         invites = [(item[0].name, item[0].id, item[1].name, item[1].id) for item in zip(events,
                                                                                         employers)]
 
-        return render_template('student.html', name=user.name,
+        return render_template('student.html', id=id, name=user.name,
                                contacts=user.contacts,
                                cv=user.cv_hash, is_owner=is_owner, documents=documents,
                                invites=invites)
@@ -163,6 +168,91 @@ def empl_signup():
         return json.dumps({'success': user.id})
 
 
+@app.route('/diploma/<string:name>', methods=['GET'])
+def get_diploma(name):
+    if os.path.splitext(name)[1] == '.pdf':
+        return send_file(app.config['UPLOAD_FOLDER'] + name, mimetype='application/pdf')
+    else:
+        return send_file(app.config['UPLOAD_FOLDER'] + name, as_attachment=True)
+
+
+
+@app.route('/upload_diploma/<int:id>', methods=['POST'])
+def upload_diploma(id):
+    if request.method == 'POST':
+        # check if the post request has the file part
+        if 'file' not in request.files:
+            flash('No file part')
+            return redirect(request.url)
+        file = request.files['file']
+        # if user does not select file, browser also
+        # submit a empty part without filename
+        if file.filename == '':
+            return 'Файл не выбран', 400
+        if os.path.splitext(file.filename)[1] != '.pdf' \
+            and os.path.splitext(file.filename)[1] != '.docx':
+            return 'Файлы данного расширения не поддерживаются', 400
+        if file:
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], file.filename))
+            filename = '{}{}'.format(hashlib.md5(file.read()).hexdigest(), os.path.splitext(file.filename)[1])
+            os.rename('{}{}'.format(app.config['UPLOAD_FOLDER'], file.filename),
+                      '{}{}'.format(app.config['UPLOAD_FOLDER'], filename))
+
+
+            doc = Document()
+            doc.student_id = id
+            doc.filename = filename
+            doc.link = '/diploma/' + filename
+            doc.title = file.filename
+            doc.type = 'Нет данных'
+            doc.year = 2018
+            doc.supervisor = 'Нет данных'
+            text = textract.process('{}{}'.format(app.config['UPLOAD_FOLDER'], filename))
+
+            if os.path.splitext(file.filename)[1] == '.pdf':
+                text = textract.process('{}{}'.format(app.config['UPLOAD_FOLDER'], filename)).decode("utf-8")
+            elif os.path.splitext(file.filename)[1] == '.docx':
+                doc_file = docx.Document('{}{}'.format(app.config['UPLOAD_FOLDER'], filename))
+                fullText = []
+                for para in doc_file.paragraphs:
+                    fullText.append(para.text)
+                text = '\n'.join(fullText)
+
+            doc.text = text
+
+            db.session.add(doc)
+            db.session.commit()
+
+            data = {
+                'id': doc.id,
+                'speciality': 'Нет данных',
+                'university': 'Нет данных',
+                'supervisor': 'Нет данных',
+                'type': 'Нет данных',
+                'title': doc.title,
+                'text': doc.text,
+                'year': '2018',
+                'link': doc.link,
+            }
+            find_text.put_diploma_to_index(data)
+
+            return '', 200
+
+
+@app.route('/remove_diploma/<int:id>', methods=['PATCH'])
+def remove_diploma(id):
+    doc = Document.query.filter_by(id=id).first()
+    if doc.link.startswith('/diplomas/'):
+        os.remove('{}{}'.format(app.config['UPLOAD_FOLDER'], doc.filename))
+    Document.query.filter_by(id=id).delete()
+    db.session.commit()
+    return '', 200
+
+
+@app.route('/update_diploma/<int:id>', methods=['PATCH'])
+def update_diploma(id):
+    pass
+
 @app.route('/empl/<int:id>', methods=['UPDATE'])
 def update_empl(id):
     name = request.form.get('Username')
@@ -238,7 +328,7 @@ def get_event(empl_id, id):
     print(res)
 
     def enrich_response(record):
-        student_id = record['id']
+        student_id = Document.query.filter_by(id=record['id']).first().student_id
         student = Student.query.filter_by(id=student_id).first()
 
         event = Notification.query.filter_by(student_id=student_id, event_id=id).first()
@@ -296,7 +386,7 @@ def post_event(id):
     db.session.add(event)
     db.session.commit()
 
-    find_text.add_to_index({"text": event.name + " " + event.description, "date": datetime.utcnow(),
+    find_text.add_event_to_index({"text": event.name + " " + event.description, "date": datetime.utcnow(),
                             "id": event.id})
 
     print('{} {} {} {}'.format(event.name, event.description, event.diploma, event.employer_id))
