@@ -192,6 +192,19 @@ def put_diploma_to_index(diploma):
 def patch_diploma_in_index(diploma):
     pass
 
+def remove_diploma_from_index(id):
+    try:
+        es.delete(index='uni', doc_type='diploma', id=id)
+    except Exception as e:
+        print(e)
+
+
+def remove_event_from_index(id):
+    try:
+        es.delete(index='events', doc_type='internship', id=id)
+    except Exception as e:
+        print(e)
+
 
 def get_all_vacancies():
     doc = {
@@ -212,19 +225,3 @@ def get_all_vacancies():
     return res
 
 
-{"uni": {"aliases": {},
-         "mappings": {"diploma": {
-             "properties": {"link": {"type": "text", "fields": {"keyword": {"type": "keyword", "ignore_above": 256}}},
-                            "speciality": {"type": "text",
-                                           "fields": {"keyword": {"type": "keyword", "ignore_above": 256}}},
-                            "supervisor": {"type": "text",
-                                           "fields": {"keyword": {"type": "keyword", "ignore_above": 256}}},
-                            "text": {"type": "text", "fields": {"keyword": {"type": "keyword", "ignore_above": 256}}},
-                            "title": {"type": "text", "fields": {"keyword": {"type": "keyword", "ignore_above": 256}}},
-                            "type": {"type": "text", "fields": {"keyword": {"type": "keyword", "ignore_above": 256}}},
-                            "university": {"type": "text",
-                                           "fields": {"keyword": {"type": "keyword", "ignore_above": 256}}},
-                            "year": {"type": "long"}}}},
-         "settings": {
-             "index": {"creation_date": "1521973267912", "number_of_shards": "5", "number_of_replicas": "1",
-                       "uuid": "VTzqXhJbS0SATdDEvyqn7A", "version": {"created": "6020399"}, "provided_name": "uni"}}}}

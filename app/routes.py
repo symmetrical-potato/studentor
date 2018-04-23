@@ -198,6 +198,9 @@ def upload_diploma(id):
             os.rename('{}{}'.format(app.config['UPLOAD_FOLDER'], file.filename),
                       '{}{}'.format(app.config['UPLOAD_FOLDER'], filename))
 
+            for i in range(5000, 5100):
+                find_text.remove_diploma_from_index(i)
+
 
             doc = Document()
             doc.student_id = id
@@ -244,6 +247,7 @@ def remove_diploma(id):
     doc = Document.query.filter_by(id=id).first()
     if doc.link.startswith('/diplomas/'):
         os.remove('{}{}'.format(app.config['UPLOAD_FOLDER'], doc.filename))
+        find_text.remove_diploma_from_index(id)
     Document.query.filter_by(id=id).delete()
     db.session.commit()
     return '', 200
@@ -328,10 +332,12 @@ def get_event(empl_id, id):
     print(res)
 
     def enrich_response(record):
-        student_id = Document.query.filter_by(id=record['id']).first().student_id
-        student = Student.query.filter_by(id=student_id).first()
+        doc = Document.query.filter_by(id=record['id']).first()
+        if doc is None:
+            return
+        student = Student.query.filter_by(id=doc.student_id).first()
 
-        event = Notification.query.filter_by(student_id=student_id, event_id=id).first()
+        event = Notification.query.filter_by(student_id=doc.student_id, event_id=id).first()
 
         if student is None:
             return {}
