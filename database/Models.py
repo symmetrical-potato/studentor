@@ -1,7 +1,10 @@
+import elasticsearch as esearch
+
 from app import db, login
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from flask import request
+
 
 @login.user_loader
 def load_user(id):
@@ -38,13 +41,36 @@ class Employer(UserMixin, User, db.Model):
         return '<Employer {}>'.format(self.name)
 
 
-# class Event(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     name = db.Column('name', db.String(255))
-#     description = db.Column('description', db.String(1500))
-#     diploma = db.Column('diploma', db.Boolean)
-#     employer_id = db.Column('employer_id', db.Integer, db.ForeignKey('employer.id'))
+class Event:
+    def __init__(self, name, description, diploma, employer_id):
+        self.name = name
+        self.description = description
+        self.diploma = diploma
+        self.employer_id = employer_id
 
+        content = dict()
+
+        content['name'] = name
+        content['description'] = description
+        content['diploma'] = diploma
+        content['employer_id'] = employer_id
+
+        with esearch.Elasticsearch() as es:
+            doc_type = "diploma" if diploma else "internship"
+            result = es.index(index='events', doc_type=doc_type, body=content)
+            self.id = result._id
+
+    @classmethod
+    def get_by_id(cls, id):
+        query = { "terms": { "_id": [id] }}
+        with esearch.Elasticsearch() as es:
+            cur = es.search(index='uni', body=query)
+        for hit in cur['hits']['hits']:
+            res.append({'id': int(hit['_id']),
+                        'score': hit['_score'],
+                        'title': hit['_source']['title'],
+                        'link': hit['_source']['link'],
+                        'type': 'diploma'})
 
 # class Document(db.Model):
 #     id = db.Column(db.Integer, primary_key=True)
