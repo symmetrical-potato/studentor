@@ -38,25 +38,25 @@ class Employer(UserMixin, User, db.Model):
         return '<Employer {}>'.format(self.name)
 
 
-class Event(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column('name', db.String(255))
-    description = db.Column('description', db.String(1500))
-    diploma = db.Column('diploma', db.Boolean)
-    employer_id = db.Column('employer_id', db.Integer, db.ForeignKey('employer.id'))
+# class Event(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+#     name = db.Column('name', db.String(255))
+#     description = db.Column('description', db.String(1500))
+#     diploma = db.Column('diploma', db.Boolean)
+#     employer_id = db.Column('employer_id', db.Integer, db.ForeignKey('employer.id'))
 
 
-class Document(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    filename = db.Column('filename', db.String(255))
-    link = db.Column('link', db.String(255))
-    supervisor = db.Column('supervisor', db.String(255))
-    text = db.Column('text', db.String(1000000))
-    title = db.Column('title', db.String(500))
-    type = db.Column('type', db.String(500))
-    university = db.Column('description', db.String(255))
-    year = db.Column('year', db.Integer)
-    student_id = db.Column('student_id', db.Integer, db.ForeignKey('student.id'))
+# class Document(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+#     filename = db.Column('filename', db.String(255))
+#     link = db.Column('link', db.String(255))
+#     supervisor = db.Column('supervisor', db.String(255))
+#     text = db.Column('text', db.String(1000000))
+#     title = db.Column('title', db.String(500))
+#     type = db.Column('type', db.String(500))
+#     university = db.Column('description', db.String(255))
+#     year = db.Column('year', db.Integer)
+#     student_id = db.Column('student_id', db.Integer, db.ForeignKey('student.id'))
 
 
 class Notification(db.Model):
