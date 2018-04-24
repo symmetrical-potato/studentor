@@ -198,10 +198,6 @@ def upload_diploma(id):
             os.rename('{}{}'.format(app.config['UPLOAD_FOLDER'], file.filename),
                       '{}{}'.format(app.config['UPLOAD_FOLDER'], filename))
 
-            for i in range(5000, 5100):
-                find_text.remove_diploma_from_index(i)
-
-
             doc = Document()
             doc.student_id = id
             doc.filename = filename
