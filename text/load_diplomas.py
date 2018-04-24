@@ -6,7 +6,7 @@ es= esearch.Elasticsearch()
 es.indices.create(index='uni', ignore=400)
 doc_type = 'diploma'
 
-dtf = pd.read_csv('diplomas.csv')
+dtf = pd.read_csv('../../data/diplomas.csv')
 
 bar = ProgressBar()
 for st in bar(dtf.iterrows()):
@@ -22,6 +22,6 @@ for st in bar(dtf.iterrows()):
         content['year'] = st[1]['year']
         content['link'] = st[1]['link']
 
-        es.index(index='uni',  doc_type=doc_type, id=st[1]['id'], body=content)
+        res = es.index(index='uni',  doc_type=doc_type, body=content)
     except:
         print('skip {}'.format(content['link']))
